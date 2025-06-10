@@ -1,0 +1,3 @@
+name = "juris-website"
+compatibility_date = "2025-04-21"
+pages_build_output_dir = ".vercel/output/static"
