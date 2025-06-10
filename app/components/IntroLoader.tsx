@@ -16,7 +16,13 @@ const LANDSCAPE_IMAGES = [
   'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80',
   'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80',
   'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80',
-  'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80'
+  'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80',
+  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80',
+  'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80',
+  'https://images.unsplash.com/photo-1464822759844-d150baec0494?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80',
+  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80',
+  'https://images.unsplash.com/photo-1445262102387-5fbb30a5e59d?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80',
+  'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80'
 ];
 
 interface IntroLoaderProps {

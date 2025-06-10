@@ -15,7 +15,7 @@ export default function Home() {
       {showIntro && (
         <IntroLoader 
           onComplete={handleIntroComplete}
-          useBlackAndWhite={true} // ← TOGGLE: true = B&W, false = color
+          useBlackAndWhite={false} // ← TOGGLE: true = B&W, false = color
         />
       )}
       
