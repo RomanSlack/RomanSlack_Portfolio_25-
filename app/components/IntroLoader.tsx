@@ -10,6 +10,7 @@ interface Particle {
   size: number;
   fadeRate: number;
   delay: number;
+  number: number;
 }
 
 const LANDSCAPE_IMAGES = [
@@ -40,6 +41,7 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
   const [imageLoaded, setImageLoaded] = useState(false);
   const [animationStarted, setAnimationStarted] = useState(false);
   const [textFadeStart, setTextFadeStart] = useState(false);
+  const [backgroundFadeStart, setBackgroundFadeStart] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
 
   useEffect(() => {
@@ -59,9 +61,8 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
     if (!canvas || !ctx) return;
     
     try {
-      // Clear canvas
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Clear canvas - transparent to show background image
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       const particles = particlesRef.current;
       
@@ -73,11 +74,31 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
         const y = Math.floor(particle.y);
         
         ctx.save();
-        ctx.globalAlpha = particle.alpha;
-        ctx.fillStyle = `rgb(${particle.color[0]}, ${particle.color[1]}, ${particle.color[2]})`;
-        ctx.beginPath();
-        ctx.arc(x + particle.size/2, y + particle.size/2, particle.size/2, 0, Math.PI * 2);
-        ctx.fill();
+        
+        // Glass effect with gradient
+        const gradient = ctx.createLinearGradient(x, y, x + particle.size, y + particle.size);
+        gradient.addColorStop(0, `rgba(${particle.color[0]}, ${particle.color[1]}, ${particle.color[2]}, ${particle.alpha * 0.8})`);
+        gradient.addColorStop(0.5, `rgba(${particle.color[0]}, ${particle.color[1]}, ${particle.color[2]}, ${particle.alpha * 0.4})`);
+        gradient.addColorStop(1, `rgba(${particle.color[0]}, ${particle.color[1]}, ${particle.color[2]}, ${particle.alpha * 0.1})`);
+        
+        // Draw main glass square
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = gradient;
+        ctx.fillRect(x, y, particle.size, particle.size);
+        
+        // Add glass highlight
+        ctx.globalAlpha = particle.alpha * 0.6;
+        ctx.fillStyle = `rgba(255, 255, 255, ${particle.alpha * 0.3})`;
+        ctx.fillRect(x + particle.size * 0.1, y + particle.size * 0.1, particle.size * 0.3, particle.size * 0.3);
+        
+        // Draw number in center of square
+        ctx.globalAlpha = particle.alpha * 0.9;
+        ctx.fillStyle = `rgba(255, 255, 255, ${particle.alpha * 0.8})`;
+        ctx.font = `${particle.size * 0.6}px "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(particle.number.toString(), x + particle.size/2, y + particle.size/2);
+        
         ctx.restore();
       }
     } catch (error) {
@@ -125,9 +146,10 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
                 y: y,
                 alpha: Math.min((a / 255) * 0.9, 1),
                 color: finalColor,
-                size: Math.random() * 3 + 3,
+                size: Math.random() * 5 + 5,
                 fadeRate: 0.010 + Math.random() * 0.022,
-                delay: 0 // No delay needed for wave effect
+                delay: 0, // No delay needed for wave effect
+                number: Math.floor(Math.random() * 10)
               });
             }
           }
@@ -154,9 +176,8 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
     }
     
     try {
-      // Clear canvas efficiently
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Clear canvas - transparent to show background image
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       const particles = particlesRef.current;
       const currentTime = Date.now();
@@ -186,7 +207,7 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
       const waveCenter = progress * (canvas.width + waveWidth) - waveWidth * 0.5;
       
       // Batch canvas operations
-      const particlesToDraw: {x: number, y: number, alpha: number, color: [number, number, number], size: number}[] = [];
+      const particlesToDraw: {x: number, y: number, alpha: number, color: [number, number, number], size: number, number: number}[] = [];
       
       for (let i = particles.length - 1; i >= 0; i--) {
         const particle = particles[i];
@@ -212,17 +233,36 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
           y: Math.floor(particle.y),
           alpha: particle.alpha,
           color: particle.color,
-          size: particle.size
+          size: particle.size,
+          number: particle.number
         });
       }
       
-      // Batch draw all particles as circles
+      // Batch draw all particles as glass squares with numbers
       for (const p of particlesToDraw) {
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = `rgb(${p.color[0]}, ${p.color[1]}, ${p.color[2]})`;
-        ctx.beginPath();
-        ctx.arc(p.x + p.size/2, p.y + p.size/2, p.size/2, 0, Math.PI * 2);
-        ctx.fill();
+        // Glass effect with gradient and transparency
+        const gradient = ctx.createLinearGradient(p.x, p.y, p.x + p.size, p.y + p.size);
+        gradient.addColorStop(0, `rgba(${p.color[0]}, ${p.color[1]}, ${p.color[2]}, ${p.alpha * 0.8})`);
+        gradient.addColorStop(0.5, `rgba(${p.color[0]}, ${p.color[1]}, ${p.color[2]}, ${p.alpha * 0.4})`);
+        gradient.addColorStop(1, `rgba(${p.color[0]}, ${p.color[1]}, ${p.color[2]}, ${p.alpha * 0.1})`);
+        
+        // Draw main glass square
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = gradient;
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+        
+        // Add glass highlight
+        ctx.globalAlpha = p.alpha * 0.6;
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha * 0.3})`;
+        ctx.fillRect(p.x + p.size * 0.1, p.y + p.size * 0.1, p.size * 0.3, p.size * 0.3);
+        
+        // Draw number in center of square
+        ctx.globalAlpha = p.alpha * 0.9;
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha * 0.8})`;
+        ctx.font = `${p.size * 0.6}px "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(p.number.toString(), p.x + p.size/2, p.y + p.size/2);
       }
       
       // Reset global alpha
@@ -246,19 +286,16 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
       
       setImageLoaded(true);
       
-      // Create particles immediately for static display
-      const canvas = canvasRef.current;
-      const ctx = canvas?.getContext('2d');
-      
-      if (canvas && ctx && imageRef.current) {
-        setAnimationStarted(true);
-        createParticlesFromImage(canvas, ctx);
-        
-        // Start wave animation after delay
+      // Fade background first, then text
+      setTimeout(() => {
+        setBackgroundFadeStart(true);
         setTimeout(() => {
-          animateParticles();
-        }, 3000);
-      }
+          setTextFadeStart(true);
+          setTimeout(() => {
+            if (onComplete) onComplete();
+          }, 2000);
+        }, 2000);
+      }, 3000);
     } catch (error) {
       console.warn('Image load error:', error);
     }
@@ -302,8 +339,8 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
             ref={imageRef}
             src={selectedImage}
             alt="Landscape"
-            className={`w-full h-full object-cover transition-opacity duration-500 ${
-              imageLoaded ? 'opacity-0' : 'opacity-0'
+            className={`w-full h-full object-cover transition-opacity duration-[2000ms] ${
+              imageLoaded && !backgroundFadeStart ? 'opacity-100' : 'opacity-0'
             }`}
             style={{
               filter: 'grayscale(100%) contrast(1.2) brightness(0.7)',
@@ -320,7 +357,7 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
             <div className="relative">
               {/* Main text with original image as background */}
               <h1 
-                className={`relative text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-thin tracking-[0.15em] select-none transition-all duration-800 ${
+                className={`relative text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-thin tracking-[0.15em] select-none transition-all duration-[2000ms] ${
                   textFadeStart ? 'opacity-0 transform translate-y-2' : 'opacity-100'
                 }`}
                 style={{
@@ -339,7 +376,7 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
               
               {/* Subtle white outline for definition */}
               <h1 
-                className={`absolute top-0 left-0 text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-thin tracking-[0.15em] select-none transition-all duration-800 ${
+                className={`absolute top-0 left-0 text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-thin tracking-[0.15em] select-none transition-all duration-[2000ms] ${
                   textFadeStart ? 'opacity-0 transform translate-y-2' : 'opacity-100'
                 }`}
                 style={{
@@ -356,14 +393,6 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
         )}
       </div>
       
-      {/* Canvas for Particle Animation */}
-      <canvas
-        ref={canvasRef}
-        className={`absolute inset-0 transition-opacity duration-700 ${
-          animationStarted ? 'opacity-100' : 'opacity-0'
-        }`}
-        style={{ pointerEvents: 'none' }}
-      />
       
     </div>
   );
