@@ -95,7 +95,7 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const particles: Particle[] = [];
       
-      const step = window.innerWidth > 1920 ? 6 : window.innerWidth > 1024 ? 4 : 3;
+      const step = window.innerWidth > 1920 ? 10 : window.innerWidth > 1024 ? 8 : 6;
       
       // Sample the entire image area - ensure full coverage
       for (let y = 0; y < canvas.height; y += step) {
@@ -109,8 +109,8 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
             const b = imageData.data[index + 2] || 0;
             const a = imageData.data[index + 3] || 0;
             
-            // Create particles with some filtering to reduce count
-            if (a > 50 && Math.random() > 0.3) {
+            // Create particles with more filtering to reduce count
+            if (a > 50 && Math.random() > 0.5) {
               // ← BLACK & WHITE TOGGLE: Convert to grayscale if enabled
               let finalColor: [number, number, number];
               if (useBlackAndWhite) {
@@ -125,7 +125,7 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
                 y: y,
                 alpha: Math.min((a / 255) * 0.9, 1),
                 color: finalColor,
-                size: Math.random() * 1.5 + 1,
+                size: Math.random() * 3 + 3,
                 fadeRate: 0.010 + Math.random() * 0.022,
                 delay: 0 // No delay needed for wave effect
               });
