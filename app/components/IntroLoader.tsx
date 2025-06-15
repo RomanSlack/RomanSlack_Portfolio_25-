@@ -75,7 +75,9 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
         ctx.save();
         ctx.globalAlpha = particle.alpha;
         ctx.fillStyle = `rgb(${particle.color[0]}, ${particle.color[1]}, ${particle.color[2]})`;
-        ctx.fillRect(x, y, particle.size, particle.size);
+        ctx.beginPath();
+        ctx.arc(x + particle.size/2, y + particle.size/2, particle.size/2, 0, Math.PI * 2);
+        ctx.fill();
         ctx.restore();
       }
     } catch (error) {
@@ -107,8 +109,8 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
             const b = imageData.data[index + 2] || 0;
             const a = imageData.data[index + 3] || 0;
             
-            // Create particles for all visible pixels - no random filtering
-            if (a > 20) {
+            // Create particles with some filtering to reduce count
+            if (a > 50 && Math.random() > 0.3) {
               // ← BLACK & WHITE TOGGLE: Convert to grayscale if enabled
               let finalColor: [number, number, number];
               if (useBlackAndWhite) {
@@ -152,7 +154,7 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
     }
     
     try {
-      // Clear canvas
+      // Clear canvas efficiently
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
@@ -177,48 +179,57 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
       
       let visibleParticles = 0;
       
-      // Wave parameters - faster animation
-      const animationDuration = 1500; // Faster duration (was implicit ~3000ms)
-      const waveWidth = canvas.width * 0.3; // Width of the wave effect
+      // Wave parameters - optimized calculations
+      const animationDuration = 1500;
+      const waveWidth = canvas.width * 0.25; // Slightly narrower wave
       const progress = Math.min(elapsed / animationDuration, 1);
       const waveCenter = progress * (canvas.width + waveWidth) - waveWidth * 0.5;
+      
+      // Batch canvas operations
+      const particlesToDraw: {x: number, y: number, alpha: number, color: [number, number, number], size: number}[] = [];
       
       for (let i = particles.length - 1; i >= 0; i--) {
         const particle = particles[i];
         if (!particle) continue;
         
-        // Calculate distance from wave center with noise
-        const noiseOffset = (Math.sin(particle.y * 0.02) * Math.cos(particle.x * 0.015)) * 50;
-        const distanceFromWave = Math.abs(particle.x - (waveCenter + noiseOffset));
+        // Simplified noise calculation (less expensive)
+        const noiseOffset = Math.sin(particle.y * 0.01 + particle.x * 0.008) * 40;
         
         // Calculate fade based on wave position
         if (particle.x < waveCenter + noiseOffset) {
-          // Behind the wave - fade out
-          const fadeDistance = Math.min(distanceFromWave / waveWidth, 1);
-          particle.alpha = Math.max(0, particle.alpha - (0.05 + fadeDistance * 0.02));
+          particle.alpha = Math.max(0, particle.alpha - 0.08); // Faster fade
         }
         
         // Remove completely faded particles
-        if (particle.alpha <= 0) {
+        if (particle.alpha <= 0.01) {
           particles.splice(i, 1);
           continue;
         }
         
         visibleParticles++;
-        
-        // Draw particle at original position
-        const x = Math.floor(particle.x);
-        const y = Math.floor(particle.y);
-        
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, particle.alpha);
-        ctx.fillStyle = `rgb(${particle.color[0]}, ${particle.color[1]}, ${particle.color[2]})`;
-        ctx.fillRect(x, y, particle.size, particle.size);
-        ctx.restore();
+        particlesToDraw.push({
+          x: Math.floor(particle.x),
+          y: Math.floor(particle.y),
+          alpha: particle.alpha,
+          color: particle.color,
+          size: particle.size
+        });
       }
       
+      // Batch draw all particles as circles
+      for (const p of particlesToDraw) {
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = `rgb(${p.color[0]}, ${p.color[1]}, ${p.color[2]})`;
+        ctx.beginPath();
+        ctx.arc(p.x + p.size/2, p.y + p.size/2, p.size/2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      
+      // Reset global alpha
+      ctx.globalAlpha = 1;
+      
       // Start text fade only after wave is completely done and particles are mostly gone
-      if (progress >= 1 && visibleParticles < 100 && !textFadeStart) {
+      if (progress >= 1 && visibleParticles < 50 && !textFadeStart) {
         setTextFadeStart(true);
       }
       
@@ -235,17 +246,19 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
       
       setImageLoaded(true);
       
-      // Start fade animation after a delay (added 1 second)
-      setTimeout(() => {
-        const canvas = canvasRef.current;
-        const ctx = canvas?.getContext('2d');
+      // Create particles immediately for static display
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext('2d');
+      
+      if (canvas && ctx && imageRef.current) {
+        setAnimationStarted(true);
+        createParticlesFromImage(canvas, ctx);
         
-        if (canvas && ctx && imageRef.current) {
-          setAnimationStarted(true);
-          createParticlesFromImage(canvas, ctx);
+        // Start wave animation after delay
+        setTimeout(() => {
           animateParticles();
-        }
-      }, 3000);
+        }, 3000);
+      }
     } catch (error) {
       console.warn('Image load error:', error);
     }
