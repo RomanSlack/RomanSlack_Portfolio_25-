@@ -124,8 +124,8 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
                 alpha: Math.min((a / 255) * 0.9, 1),
                 color: finalColor,
                 size: Math.random() * 1.5 + 1,
-                fadeRate: 0.010 + Math.random() * 0.022, // ← FADE SPEED CONTROL
-                delay: Math.random() * 1000             // ← DELAY CONTROL
+                fadeRate: 0.010 + Math.random() * 0.022,
+                delay: 0 // No delay needed for wave effect
               });
             }
           }
@@ -170,20 +170,32 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
           setTextFadeStart(true);
           setTimeout(() => {
             if (onComplete) onComplete();
-          }, 800); // Quicker end
+          }, 400);
         }
         return;
       }
       
       let visibleParticles = 0;
       
+      // Wave parameters - faster animation
+      const animationDuration = 1500; // Faster duration (was implicit ~3000ms)
+      const waveWidth = canvas.width * 0.3; // Width of the wave effect
+      const progress = Math.min(elapsed / animationDuration, 1);
+      const waveCenter = progress * (canvas.width + waveWidth) - waveWidth * 0.5;
+      
       for (let i = particles.length - 1; i >= 0; i--) {
         const particle = particles[i];
         if (!particle) continue;
         
-        // Simple fade out with delay - no physics
-        if (elapsed > particle.delay) {
-          particle.alpha -= particle.fadeRate;
+        // Calculate distance from wave center with noise
+        const noiseOffset = (Math.sin(particle.y * 0.02) * Math.cos(particle.x * 0.015)) * 50;
+        const distanceFromWave = Math.abs(particle.x - (waveCenter + noiseOffset));
+        
+        // Calculate fade based on wave position
+        if (particle.x < waveCenter + noiseOffset) {
+          // Behind the wave - fade out
+          const fadeDistance = Math.min(distanceFromWave / waveWidth, 1);
+          particle.alpha = Math.max(0, particle.alpha - (0.05 + fadeDistance * 0.02));
         }
         
         // Remove completely faded particles
@@ -205,8 +217,8 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
         ctx.restore();
       }
       
-      // Start text fade when almost all particles are gone
-      if (visibleParticles < 50 && !textFadeStart) {
+      // Start text fade only after wave is completely done and particles are mostly gone
+      if (progress >= 1 && visibleParticles < 100 && !textFadeStart) {
         setTextFadeStart(true);
       }
       
@@ -223,7 +235,7 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
       
       setImageLoaded(true);
       
-      // Start fade animation after a delay
+      // Start fade animation after a delay (added 1 second)
       setTimeout(() => {
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext('2d');
@@ -233,7 +245,7 @@ export default function IntroLoader({ onComplete, useBlackAndWhite = true }: Int
           createParticlesFromImage(canvas, ctx);
           animateParticles();
         }
-      }, 2000);
+      }, 3000);
     } catch (error) {
       console.warn('Image load error:', error);
     }
