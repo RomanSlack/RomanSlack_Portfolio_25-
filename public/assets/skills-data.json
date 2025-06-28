@@ -1,0 +1,82 @@
+{
+  "1": {
+    "name": "Python",
+    "years": 8
+  },
+  "2": {
+    "name": "Blender",
+    "years": 8
+  },
+  "3": {
+    "name": "Unreal Engine 5",
+    "years": 5
+  },
+  "4": {
+    "name": "C++",
+    "years": 2
+  },
+  "5": {
+    "name": "C Sharp",
+    "years": 3
+  },
+  "6": {
+    "name": "Git",
+    "years": 7
+  },
+  "7": {
+    "name": "JavaScript",
+    "years": 7
+  },
+  "8": {
+    "name": "TensorFlow",
+    "years": 4
+  },
+  "9": {
+    "name": "PyTorch",
+    "years": 4
+  },
+  "10": {
+    "name": "Ubuntu",
+    "years": 2
+  },
+  "11": {
+    "name": "Unity",
+    "years": 3
+  },
+  "12": {
+    "name": "Docker",
+    "years": 2
+  },
+  "13": {
+    "name": "TypeScript",
+    "years": 4
+  },
+  "14": {
+    "name": "React",
+    "years": 4
+  },
+  "15": {
+    "name": "Node.js",
+    "years": 4
+  },
+  "16": {
+    "name": "Next.js",
+    "years": 4
+  },
+  "17": {
+    "name": "Flutter",
+    "years": 4
+  },
+  "18": {
+    "name": "AWS",
+    "years": 3
+  },
+  "19": {
+    "name": "Azure Cloud",
+    "years": 3
+  },
+  "20": {
+    "name": "Google Cloud",
+    "years": 3
+  }
+}

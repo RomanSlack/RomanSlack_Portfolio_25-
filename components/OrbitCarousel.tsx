@@ -13,6 +13,9 @@ interface OrbitCarouselProps {
 
 export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleOffsetX = 0, circleOffsetY = 0 }: OrbitCarouselProps) {
   const [iconPaths, setIconPaths] = useState<string[]>([]);
+  const [skillsData, setSkillsData] = useState<Record<string, { name: string; years: number }>>({});
+  const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const loadIcons = async () => {
@@ -43,6 +46,34 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
 
     loadIcons();
   }, [iconFolderPath]);
+
+  useEffect(() => {
+    const loadSkillsData = async () => {
+      try {
+        const response = await fetch('/assets/skills-data.json');
+        const data = await response.json();
+        setSkillsData(data);
+      } catch (error) {
+        console.warn('Could not load skills data');
+      }
+    };
+
+    loadSkillsData();
+  }, []);
+
+  const handleMouseEnter = (iconPath: string, event: React.MouseEvent) => {
+    const iconNumber = iconPath.split('/').pop()?.replace('.png', '') || '';
+    setHoveredIcon(iconNumber);
+    setTooltipPosition({ x: event.clientX, y: event.clientY });
+  };
+
+  const handleMouseMove = (event: React.MouseEvent) => {
+    setTooltipPosition({ x: event.clientX, y: event.clientY });
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredIcon(null);
+  };
 
   const radius = 340;
   const centerX = 300;
@@ -75,11 +106,13 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
           animation: counterRotate ${speedMs}ms linear infinite;
           transform-origin: center center;
           filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-          transition: transform 0.2s ease;
+          transition: transform 0.3s ease, filter 0.3s ease;
+          cursor: pointer;
         }
         .icon-container:hover {
-          transform: scale(1.2);
-          filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+          transform: scale(1.3);
+          filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+          z-index: 10;
         }
       `}</style>
       
@@ -113,6 +146,9 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
                 width: `${sizePx}px`,
                 height: `${sizePx}px`,
               }}
+              onMouseEnter={(e) => handleMouseEnter(iconPath, e)}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
             >
               <Image
                 src={iconPath}
@@ -125,6 +161,23 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
           );
         })}
       </div>
+
+      {/* Tooltip */}
+      {hoveredIcon && skillsData[hoveredIcon] && (
+        <div
+          className="fixed z-50 bg-neutral-800 text-white px-3 py-2 rounded-full text-sm font-medium shadow-lg border border-neutral-600 pointer-events-none"
+          style={{
+            left: `${tooltipPosition.x + 10}px`,
+            top: `${tooltipPosition.y - 50}px`,
+            transform: 'translateX(-50%)',
+          }}
+        >
+          <div className="text-center">
+            <div className="text-xs text-gray-300">Years of Experience</div>
+            <div className="text-lg font-semibold">{skillsData[hoveredIcon].years}</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
