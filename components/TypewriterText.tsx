@@ -7,18 +7,20 @@ interface TypewriterTextProps {
   typingSpeed?: number;
   backspaceSpeed?: number;
   pauseDuration?: number;
+  delayAfterErase?: number;
 }
 
 export default function TypewriterText({ 
   titles, 
-  typingSpeed = 100, 
-  backspaceSpeed = 50, 
-  pauseDuration = 2000 
+  typingSpeed = 70,
+  backspaceSpeed = 80,
+  pauseDuration = 10000,
+  delayAfterErase = 800
 }: TypewriterTextProps) {
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
-  const [showCursor, setShowCursor] = useState(true);
+  const [isWaitingAfterErase, setIsWaitingAfterErase] = useState(false);
 
   useEffect(() => {
     if (titles.length === 0) return;
@@ -26,7 +28,14 @@ export default function TypewriterText({
     const currentTitle = titles[currentTitleIndex];
     let timeout: NodeJS.Timeout;
 
-    if (isTyping) {
+    if (isWaitingAfterErase) {
+      // Waiting after erase is complete
+      timeout = setTimeout(() => {
+        setIsWaitingAfterErase(false);
+        setCurrentTitleIndex((prevIndex) => (prevIndex + 1) % titles.length);
+        setIsTyping(true);
+      }, delayAfterErase);
+    } else if (isTyping) {
       // Typing forward
       if (currentText.length < currentTitle.length) {
         timeout = setTimeout(() => {
@@ -45,28 +54,18 @@ export default function TypewriterText({
           setCurrentText(currentText.slice(0, -1));
         }, backspaceSpeed);
       } else {
-        // Finished backspacing, move to next title
-        setCurrentTitleIndex((prevIndex) => (prevIndex + 1) % titles.length);
-        setIsTyping(true);
+        // Finished backspacing, wait before starting next title
+        setIsWaitingAfterErase(true);
       }
     }
 
     return () => clearTimeout(timeout);
-  }, [currentText, currentTitleIndex, isTyping, titles, typingSpeed, backspaceSpeed, pauseDuration]);
-
-  // Cursor blinking effect
-  useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500);
-
-    return () => clearInterval(cursorInterval);
-  }, []);
+  }, [currentText, currentTitleIndex, isTyping, isWaitingAfterErase, titles, typingSpeed, backspaceSpeed, pauseDuration, delayAfterErase]);
 
   return (
     <span className="relative">
       {currentText}
-      <span className={`text-blue-400 ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100`}>
+      <span className="text-blue-400">
         |
       </span>
     </span>

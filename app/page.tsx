@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import OrbitCarousel from '../components/OrbitCarousel';
 import NavCard from '../components/NavCard';
 import TypewriterText from '../components/TypewriterText';
+import ContactButton from '../components/ContactButton';
 
 export default function HomePage() {
   const [titles, setTitles] = useState<string[]>([]);
@@ -29,10 +30,10 @@ export default function HomePage() {
     <div className="min-h-screen bg-neutral-900 text-white relative overflow-hidden">
       <div className="container mx-auto px-8 py-16">
         <div className="flex flex-row min-h-[80vh]">
-          <div className="w-3/5 flex flex-col justify-center">
-            <h1 className="text-7xl font-semibold leading-tight text-white mb-8">
+          <div className="w-3/5 flex flex-col justify-center pr-16 pl-4">
+            <h1 className="text-7xl font-semibold leading-tight text-white mb-8 max-w-4xl">
               Roman Slack is a,<br />
-              {titles.length > 0 && <TypewriterText titles={titles} />}
+              {titles.length > 0 && <TypewriterText titles={titles} pauseDuration={5000} delayAfterErase={1500} />}
             </h1>
             
             <div className="flex gap-4 mb-8">
@@ -124,6 +125,8 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+      
+      <ContactButton onClick={() => {}} />
     </div>
   );
 }
