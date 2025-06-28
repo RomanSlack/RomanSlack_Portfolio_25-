@@ -2,18 +2,37 @@
 
 import Image from 'next/image';
 import { IoNewspaperOutline } from "react-icons/io5";
+import { useEffect, useState } from 'react';
 import OrbitCarousel from '../components/OrbitCarousel';
 import NavCard from '../components/NavCard';
+import TypewriterText from '../components/TypewriterText';
 
 export default function HomePage() {
+  const [titles, setTitles] = useState<string[]>([]);
+
+  useEffect(() => {
+    const loadTitles = async () => {
+      try {
+        const response = await fetch('/assets/titles.json');
+        const data = await response.json();
+        setTitles(data);
+      } catch (error) {
+        console.warn('Could not load titles, using fallback');
+        setTitles(['AI Researcher']);
+      }
+    };
+
+    loadTitles();
+  }, []);
+
   return (
     <div className="min-h-screen bg-neutral-900 text-white relative overflow-hidden">
       <div className="container mx-auto px-8 py-16">
         <div className="flex flex-row min-h-[80vh]">
           <div className="w-3/5 flex flex-col justify-center">
-            <h1 className="text-5xl font-semibold leading-tight text-white mb-8">
+            <h1 className="text-7xl font-semibold leading-tight text-white mb-8">
               Roman Slack is a,<br />
-              AI Researcher
+              {titles.length > 0 && <TypewriterText titles={titles} />}
             </h1>
             
             <div className="flex gap-4 mb-8">
