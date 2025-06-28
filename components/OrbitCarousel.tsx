@@ -7,9 +7,10 @@ interface OrbitCarouselProps {
   iconFolderPath: string;
   speedMs: number;
   sizePx: number;
+  offsetX?: number;
 }
 
-export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx }: OrbitCarouselProps) {
+export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, offsetX = 0 }: OrbitCarouselProps) {
   const [iconPaths, setIconPaths] = useState<string[]>([]);
 
   useEffect(() => {
@@ -50,56 +51,66 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx }: Orbit
     <div className="relative h-[600px] w-[600px]">
       <style jsx>{`
         @keyframes rotate {
-          from {
+          0% {
             transform: rotate(0deg);
           }
-          to {
+          100% {
             transform: rotate(-360deg);
           }
         }
         @keyframes counterRotate {
-          from {
+          0% {
             transform: rotate(0deg);
           }
-          to {
+          100% {
             transform: rotate(360deg);
           }
         }
         .orbit-container {
           animation: rotate ${speedMs}ms linear infinite;
+          transform-origin: center center;
+        }
+        .icon-container {
+          animation: counterRotate ${speedMs}ms linear infinite;
+          transform-origin: center center;
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+          transition: transform 0.2s ease;
+        }
+        .icon-container:hover {
+          transform: scale(1.2);
+          filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
         }
       `}</style>
       
-      {/* Orbit path circle outline */}
+      {/* Static orbit path circle outline */}
       <div 
         className="absolute border-4 border-gray-600 rounded-full"
         style={{
           width: `${radius * 2}px`,
           height: `${radius * 2}px`,
-          left: `${centerX - radius}px`,
+          left: `${centerX - radius + offsetX}px`,
           top: `${centerY - radius}px`,
           opacity: 0.4
         }}
       />
       
-      <div className="orbit-container absolute inset-0">
+      <div className="orbit-container absolute" style={{ left: '50%', top: '50%', transform: `translate(calc(-50% + ${offsetX}px), -50%)` }}>
         {iconPaths.map((iconPath, index) => {
           // Start at top (270 degrees or -90 degrees) and go clockwise
           const angle = -90 + (360 / iconPaths.length) * index;
           const radian = (angle * Math.PI) / 180;
-          const x = centerX + radius * Math.cos(radian) - sizePx / 2;
-          const y = centerY + radius * Math.sin(radian) - sizePx / 2;
+          const x = radius * Math.cos(radian) - sizePx / 2;
+          const y = radius * Math.sin(radian) - sizePx / 2;
 
           return (
             <div
               key={iconPath}
-              className="absolute"
+              className="absolute icon-container"
               style={{
                 left: `${x}px`,
                 top: `${y}px`,
                 width: `${sizePx}px`,
                 height: `${sizePx}px`,
-                animation: `counterRotate ${speedMs}ms linear infinite`,
               }}
             >
               <Image
