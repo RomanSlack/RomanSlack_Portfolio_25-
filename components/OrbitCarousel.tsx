@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 
 interface OrbitCarouselProps {
@@ -16,6 +16,7 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
   const [skillsData, setSkillsData] = useState<Record<string, { name: string; years: number }>>({});
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadIcons = async () => {
@@ -64,11 +65,20 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
   const handleMouseEnter = (iconPath: string, event: React.MouseEvent) => {
     const iconNumber = iconPath.split('/').pop()?.replace('.png', '') || '';
     setHoveredIcon(iconNumber);
-    setTooltipPosition({ x: event.clientX, y: event.clientY });
+    
+    const rect = wrapperRef.current!.getBoundingClientRect();
+    setTooltipPosition({
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top
+    });
   };
 
   const handleMouseMove = (event: React.MouseEvent) => {
-    setTooltipPosition({ x: event.clientX, y: event.clientY });
+    const rect = wrapperRef.current!.getBoundingClientRect();
+    setTooltipPosition({
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top
+    });
   };
 
   const handleMouseLeave = () => {
@@ -80,7 +90,7 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
   const centerY = 300;
 
   return (
-    <div className="relative h-[600px] w-[600px]">
+    <div ref={wrapperRef} className="relative h-[600px] w-[600px]">
       <style jsx>{`
         @keyframes rotate {
           0% {
@@ -165,10 +175,11 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
       {/* Tooltip */}
       {hoveredIcon && skillsData[hoveredIcon] && (
         <div
-          className="fixed z-50 bg-neutral-800 text-white px-3 py-2 rounded-full text-sm font-medium shadow-lg border border-neutral-600 pointer-events-none"
+          className="absolute z-50 bg-neutral-800 text-white px-3 py-2 rounded-full text-sm font-medium shadow-lg border border-neutral-600 pointer-events-none"
           style={{
-            left: `${tooltipPosition.x + 5}px`,
-            top: `${tooltipPosition.y + 5}px`,
+            left: `${tooltipPosition.x}px`,
+            top: `${tooltipPosition.y}px`,
+            transform: 'translate(-50%, 10px)',
           }}
         >
           <div className="text-center">
