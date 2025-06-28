@@ -133,7 +133,7 @@ export default function HomePage() {
         
         {/* Cards Section */}
         <div 
-          className={`transition-all duration-1000 ease-in-out bg-neutral-700 z-20 flex-1 ${
+          className={`transition-all duration-1000 ease-in-out bg-neutral-700 z-20 flex-1 relative ${
             isExpanded 
               ? '' 
               : ''
@@ -141,14 +141,14 @@ export default function HomePage() {
         >
           <div 
             className={`container mx-auto px-8 h-full flex flex-col relative transition-all duration-1000 ease-in-out ${
-              isExpanded ? 'justify-center py-16' : 'justify-start pt-8 pb-4'
+              isExpanded ? 'justify-center py-16' : 'justify-start pt-8 pb-0'
             }`}
           >
             <div 
               className={`grid gap-8 w-full mx-auto transition-all duration-1000 ease-in-out ${
                 isExpanded 
                   ? 'grid-cols-4 max-w-full h-96' 
-                  : 'grid-cols-4 max-w-5xl h-64'
+                  : 'grid-cols-4 max-w-5xl flex-1'
               }`}
             >
               <NavCard title="About Me" onClick={handleTransition} isExpanded={isExpanded} />
@@ -156,30 +156,20 @@ export default function HomePage() {
               <NavCard title="Projects" onClick={handleTransition} isExpanded={isExpanded} />
               <NavCard title="Research" onClick={handleTransition} isExpanded={isExpanded} />
             </div>
-            
-            {!isExpanded && (
-              <div className="flex justify-center mt-4">
-                <button 
-                  onClick={handleTransition}
-                  className="animate-bounce h-8 w-8 text-white hover:text-gray-300 transition-colors"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                    />
-                  </svg>
-                </button>
-              </div>
-            )}
           </div>
+          
+          {/* Frosted Glass Overlay for Landing Mode */}
+          {!isExpanded && (
+            <div 
+              onClick={handleTransition}
+              className="absolute inset-0 bg-white/10 backdrop-blur-sm hover:bg-white/15 transition-all duration-300 cursor-pointer flex items-center justify-center group"
+            >
+              <div className="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="text-lg font-semibold mb-2">Explore Portfolio</div>
+                <div className="text-sm text-gray-300">Click to continue</div>
+              </div>
+            </div>
+          )}
         </div>
       
         <ContactButton 
