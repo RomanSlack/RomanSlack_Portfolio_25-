@@ -75,7 +75,7 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
     setHoveredIcon(null);
   };
 
-  const radius = 340;
+  const radius = 300;
   const centerX = 300;
   const centerY = 300;
 
