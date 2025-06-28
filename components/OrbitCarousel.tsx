@@ -7,10 +7,11 @@ interface OrbitCarouselProps {
   iconFolderPath: string;
   speedMs: number;
   sizePx: number;
-  offsetX?: number;
+  circleOffsetX?: number;
+  circleOffsetY?: number;
 }
 
-export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, offsetX = 0 }: OrbitCarouselProps) {
+export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleOffsetX = 0, circleOffsetY = 0 }: OrbitCarouselProps) {
   const [iconPaths, setIconPaths] = useState<string[]>([]);
 
   useEffect(() => {
@@ -82,19 +83,19 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, offsetX
         }
       `}</style>
       
-      {/* Static orbit path circle outline */}
+      {/* Static background circle - independent positioning */}
       <div 
         className="absolute border-4 border-gray-600 rounded-full"
         style={{
           width: `${radius * 2}px`,
           height: `${radius * 2}px`,
-          left: `${centerX - radius + offsetX}px`,
-          top: `${centerY - radius}px`,
+          left: `${centerX - radius + circleOffsetX}px`,
+          top: `${centerY - radius + circleOffsetY}px`,
           opacity: 0.4
         }}
       />
       
-      <div className="orbit-container absolute" style={{ left: '50%', top: '50%', transform: `translate(calc(-50% + ${offsetX}px), -50%)` }}>
+      <div className="orbit-container absolute" style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
         {iconPaths.map((iconPath, index) => {
           // Start at top (270 degrees or -90 degrees) and go clockwise
           const angle = -90 + (360 / iconPaths.length) * index;

@@ -69,7 +69,8 @@ export default function HomePage() {
                   iconFolderPath="/assets/landing-icons"
                   speedMs={90000}
                   sizePx={70}
-                  offsetX={0}
+                  circleOffsetX={-10}
+                  circleOffsetY={0}
                 />
               </div>
             </div>
