@@ -11,6 +11,7 @@ import ContactButton from '../components/ContactButton';
 export default function HomePage() {
   const [titles, setTitles] = useState<string[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     const loadTitles = async () => {
@@ -39,7 +40,17 @@ export default function HomePage() {
   }, [isExpanded]);
 
   const handleTransition = () => {
-    setIsExpanded(true);
+    setIsTransitioning(true);
+    
+    // First phase: slightly raise the divider
+    setTimeout(() => {
+      setIsExpanded(true);
+    }, 200);
+    
+    // Reset transition state after animation completes
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 1200);
   };
 
   return (
@@ -133,10 +144,14 @@ export default function HomePage() {
         
         {/* Cards Section */}
         <div 
-          className={`transition-all duration-1000 ease-in-out bg-neutral-700 z-20 flex-1 relative ${
-            isExpanded 
-              ? '' 
-              : ''
+          className={`transition-all ease-in-out bg-neutral-700 z-20 flex-1 relative ${
+            isTransitioning ? 'duration-200' : 'duration-1000'
+          } ${
+            isTransitioning 
+              ? 'transform translate-y-[-2px]' 
+              : isExpanded 
+                ? 'transform translate-y-0' 
+                : 'transform translate-y-0'
           }`}
         >
           <div 
@@ -159,17 +174,37 @@ export default function HomePage() {
           </div>
           
           {/* Frosted Glass Overlay for Landing Mode */}
-          {!isExpanded && (
-            <div 
-              onClick={handleTransition}
-              className="absolute inset-0 bg-white/10 backdrop-blur-sm hover:bg-white/15 transition-all duration-300 cursor-pointer flex items-center justify-center group"
-            >
-              <div className="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div 
+            onClick={handleTransition}
+            className={`absolute inset-0 bg-white/8 backdrop-blur-[2px] hover:bg-white/12 cursor-pointer flex items-center justify-center group transition-all duration-1000 ${
+              isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            }`}
+          >
+            <div className="text-white text-center">
+              {/* Click Icon */}
+              <div className="mb-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                <svg
+                  className="w-8 h-8 mx-auto"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
+                  />
+                </svg>
+              </div>
+              
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="text-lg font-semibold mb-2">Explore Portfolio</div>
                 <div className="text-sm text-gray-300">Click to continue</div>
               </div>
             </div>
-          )}
+          </div>
         </div>
       
         <ContactButton 
