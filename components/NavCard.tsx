@@ -9,9 +9,9 @@ export default function NavCard({ title, onClick }: NavCardProps) {
   return (
     <div
       onClick={onClick}
-      className="rounded-lg bg-neutral-800 text-white py-6 text-center hover:bg-neutral-700 transition cursor-pointer"
+      className="h-full bg-neutral-800 text-white px-6 py-8 flex flex-col justify-start items-center hover:bg-neutral-900 hover:shadow-2xl transition-all duration-300 cursor-pointer shadow-lg rounded-t-xl"
     >
-      <h3 className="font-medium">{title}</h3>
+      <h3 className="text-xl font-semibold text-center">{title}</h3>
     </div>
   );
 }

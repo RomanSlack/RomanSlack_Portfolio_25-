@@ -99,28 +99,30 @@ export default function HomePage() {
         
         {/* Bottom separator section */}
         <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-neutral-700 z-20">
-          <div className="container mx-auto px-8 py-16 h-full flex flex-col justify-center">
-            <button className="animate-bounce h-8 w-8 mx-auto my-4 text-white hover:text-gray-300 transition-colors">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                />
-              </svg>
-            </button>
-            
-            <div className="grid grid-cols-4 gap-4 mt-8 w-full max-w-4xl mx-auto">
+          <div className="container mx-auto px-8 py-8 h-full flex flex-col justify-start relative">
+            <div className="grid grid-cols-4 gap-8 mt-6 w-full max-w-5xl mx-auto h-72">
               <NavCard title="About Me" onClick={() => {}} />
               <NavCard title="Experience" onClick={() => {}} />
               <NavCard title="Projects" onClick={() => {}} />
               <NavCard title="Research" onClick={() => {}} />
+            </div>
+            
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 z-30">
+              <button className="animate-bounce h-8 w-8 text-white hover:text-gray-300 transition-colors">
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
