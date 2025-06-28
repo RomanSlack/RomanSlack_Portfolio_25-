@@ -62,7 +62,7 @@ export default function HomePage() {
               isExpanded ? 'scale-75' : 'scale-100'
             }`}
           >
-            <div className="w-3/5 flex flex-col justify-center pr-16 pl-4">
+            <div className={`w-3/5 flex flex-col pr-16 pl-4 ${isExpanded ? 'justify-center' : 'justify-end pb-16'}`}>
               <h1 className="text-7xl font-semibold leading-tight text-white mb-8 max-w-4xl">
                 Roman Slack is a,<br />
                 {titles.length > 0 && <TypewriterText titles={titles} pauseDuration={5000} delayAfterErase={1500} />}

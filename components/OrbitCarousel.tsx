@@ -167,9 +167,8 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
         <div
           className="fixed z-50 bg-neutral-800 text-white px-3 py-2 rounded-full text-sm font-medium shadow-lg border border-neutral-600 pointer-events-none"
           style={{
-            left: `${tooltipPosition.x + 10}px`,
-            top: `${tooltipPosition.y - 50}px`,
-            transform: 'translateX(-50%)',
+            left: `${tooltipPosition.x + 5}px`,
+            top: `${tooltipPosition.y + 5}px`,
           }}
         >
           <div className="text-center">
