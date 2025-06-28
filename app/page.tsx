@@ -99,8 +99,8 @@ export default function HomePage() {
         
         {/* Bottom separator section */}
         <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-neutral-700 z-20">
-          <div className="container mx-auto px-8 py-8 h-full flex flex-col justify-start relative">
-            <div className="grid grid-cols-4 gap-8 mt-6 w-full max-w-5xl mx-auto h-72">
+          <div className="container mx-auto px-8 pt-8 pb-0 h-full flex flex-col justify-start relative">
+            <div className="grid grid-cols-4 gap-8 mt-6 w-full max-w-5xl mx-auto flex-1">
               <NavCard title="About Me" onClick={() => {}} />
               <NavCard title="Experience" onClick={() => {}} />
               <NavCard title="Projects" onClick={() => {}} />
