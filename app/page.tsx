@@ -7,7 +7,7 @@ import NavCard from '../components/NavCard';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-neutral-900 text-white relative">
+    <div className="min-h-screen bg-neutral-900 text-white relative overflow-hidden">
       <div className="container mx-auto px-8 py-16">
         <div className="flex flex-row min-h-[80vh]">
           <div className="w-3/5 flex flex-col justify-center">

@@ -42,7 +42,7 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx }: Orbit
     loadIcons();
   }, [iconFolderPath]);
 
-  const radius = 320;
+  const radius = 340;
   const centerX = 300;
   const centerY = 300;
 
@@ -69,6 +69,18 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx }: Orbit
           animation: rotate ${speedMs}ms linear infinite;
         }
       `}</style>
+      
+      {/* Orbit path circle outline */}
+      <div 
+        className="absolute border-4 border-gray-600 rounded-full"
+        style={{
+          width: `${radius * 2}px`,
+          height: `${radius * 2}px`,
+          left: `${centerX - radius}px`,
+          top: `${centerY - radius}px`,
+          opacity: 0.4
+        }}
+      />
       
       <div className="orbit-container absolute inset-0">
         {iconPaths.map((iconPath, index) => {
