@@ -40,28 +40,17 @@ export default function HomePage() {
   }, [isExpanded]);
 
   const handleTransition = () => {
-    setIsTransitioning(true);
-    
-    // First phase: slightly raise the divider
-    setTimeout(() => {
-      setIsExpanded(true);
-    }, 200);
-    
-    // Reset transition state after animation completes
-    setTimeout(() => {
-      setIsTransitioning(false);
-    }, 1200);
+    setIsExpanded(true);
   };
 
   return (
     <div className="h-screen bg-neutral-900 text-white flex flex-col overflow-hidden">
       {/* Header Section */}
       <div 
-        className={`transition-all duration-1000 ease-in-out ${
-          isExpanded 
-            ? 'h-1/3' 
-            : 'h-2/3'
-        }`}
+        className="transition-all duration-1000 ease-in-out"
+        style={{
+          height: isExpanded ? '33.333333%' : '66.666667%'
+        }}
       >
         <div 
           className={`container mx-auto px-8 h-full transition-all duration-1000 ease-in-out ${
@@ -154,15 +143,7 @@ export default function HomePage() {
         
         {/* Cards Section */}
         <div 
-          className={`bg-neutral-700 z-20 flex-1 relative ${
-            isTransitioning ? 'duration-1000' : 'duration-1000'
-          } ${
-            isTransitioning 
-              ? 'transform translate-y-[-10px]' 
-              : isExpanded 
-                ? 'transform translate-y-0' 
-                : 'transform translate-y-0'
-          }`}
+          className="bg-neutral-700 z-20 flex-1 relative transition-all duration-1000 ease-in-out"
         >
           <div 
             className={`container mx-auto px-8 h-full flex flex-col relative transition-all duration-1000 ease-in-out ${
@@ -170,11 +151,12 @@ export default function HomePage() {
             }`}
           >
             <div 
-              className={`grid gap-8 w-full mx-auto transition-all duration-1000 ease-in-out ${
-                isExpanded 
-                  ? 'grid-cols-4 max-w-full h-96' 
-                  : 'grid-cols-4 max-w-5xl flex-1'
-              }`}
+              className="grid gap-8 w-full mx-auto transition-all duration-1000 ease-in-out grid-cols-4"
+              style={{
+                maxWidth: isExpanded ? '100%' : '1024px',
+                height: isExpanded ? '384px' : '100%',
+                flex: isExpanded ? 'none' : '1'
+              }}
             >
               <NavCard title="About Me" onClick={handleTransition} isExpanded={isExpanded} />
               <NavCard title="Experience" onClick={handleTransition} isExpanded={isExpanded} />
