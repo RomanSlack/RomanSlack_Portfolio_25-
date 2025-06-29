@@ -110,7 +110,11 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
           }`}
         >
           <button
-            onClick={() => {}}
+            onClick={() => {
+              // This will be handled by parent component
+              const event = new CustomEvent('openContactModal');
+              window.dispatchEvent(event);
+            }}
             className="bg-white text-black font-semibold px-10 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-100 transition-all duration-200 ease-out"
             style={{
               boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 0, 0, 0.1)',

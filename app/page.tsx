@@ -8,12 +8,13 @@ import NavCard from '../components/NavCard';
 import TypewriterText from '../components/TypewriterText';
 import ContactButton from '../components/ContactButton';
 import Modal from '../components/Modal';
+import ContactModal from '../components/ContactModal';
 
 export default function HomePage() {
   const [titles, setTitles] = useState<string[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [activeModal, setActiveModal] = useState<string | null>(null);
+  const [showContactModal, setShowContactModal] = useState(false);
 
   useEffect(() => {
     const loadTitles = async () => {
@@ -37,8 +38,17 @@ export default function HomePage() {
       }
     };
 
+    const handleOpenContactModal = () => {
+      setShowContactModal(true);
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('openContactModal', handleOpenContactModal);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('openContactModal', handleOpenContactModal);
+    };
   }, [isExpanded]);
 
   const handleTransition = () => {
@@ -54,6 +64,14 @@ export default function HomePage() {
 
   const handleModalClose = () => {
     setActiveModal(null);
+  };
+
+  const handleContactClick = () => {
+    setShowContactModal(true);
+  };
+
+  const handleContactModalClose = () => {
+    setShowContactModal(false);
   };
 
   return (
@@ -112,7 +130,7 @@ export default function HomePage() {
                 
                 <button
                   className="hover:scale-110 transition-transform duration-200"
-                  aria-label="Research Papers"
+                  aria-label="Resume"
                 >
                   <IoNewspaperOutline className="w-12 h-12 text-white hover:text-orange-400" />
                 </button>
@@ -219,7 +237,7 @@ export default function HomePage() {
         </div>
       
         <ContactButton 
-          onClick={() => {}} 
+          onClick={handleContactClick} 
           isExpanded={isExpanded}
         />
 
@@ -243,6 +261,12 @@ export default function HomePage() {
           isOpen={activeModal === "Research"}
           onClose={handleModalClose}
           title="Research"
+        />
+
+        {/* Contact Modal */}
+        <ContactModal
+          isOpen={showContactModal}
+          onClose={handleContactModalClose}
         />
       </div>
     );
