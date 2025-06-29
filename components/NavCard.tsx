@@ -10,7 +10,7 @@ export default function NavCard({ title, onClick, isExpanded = false }: NavCardP
   return (
     <div
       onClick={onClick}
-      className={`h-full bg-neutral-800 text-white px-6 py-8 flex items-center justify-center hover:bg-neutral-900 hover:shadow-2xl transition-all duration-1000 cursor-pointer shadow-lg relative ${
+      className={`h-full bg-neutral-800 text-white px-6 py-8 flex items-center justify-center hover:bg-neutral-900 hover:shadow-2xl hover:scale-105 transition-all duration-200 cursor-pointer shadow-lg relative ${
         isExpanded ? 'rounded-xl' : 'rounded-t-xl'
       }`}
     >

@@ -7,11 +7,13 @@ import OrbitCarousel from '../components/OrbitCarousel';
 import NavCard from '../components/NavCard';
 import TypewriterText from '../components/TypewriterText';
 import ContactButton from '../components/ContactButton';
+import Modal from '../components/Modal';
 
 export default function HomePage() {
   const [titles, setTitles] = useState<string[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [activeModal, setActiveModal] = useState<string | null>(null);
 
   useEffect(() => {
     const loadTitles = async () => {
@@ -41,6 +43,17 @@ export default function HomePage() {
 
   const handleTransition = () => {
     setIsExpanded(true);
+  };
+
+  const handleCardClick = (cardTitle: string) => {
+    if (!isExpanded) {
+      handleTransition();
+    }
+    setActiveModal(cardTitle);
+  };
+
+  const handleModalClose = () => {
+    setActiveModal(null);
   };
 
   return (
@@ -164,10 +177,10 @@ export default function HomePage() {
                 flex: isExpanded ? 'none' : '1'
               }}
             >
-              <NavCard title="About Me" onClick={handleTransition} isExpanded={isExpanded} />
-              <NavCard title="Experience" onClick={handleTransition} isExpanded={isExpanded} />
-              <NavCard title="Projects" onClick={handleTransition} isExpanded={isExpanded} />
-              <NavCard title="Research" onClick={handleTransition} isExpanded={isExpanded} />
+              <NavCard title="About Me" onClick={() => handleCardClick("About Me")} isExpanded={isExpanded} />
+              <NavCard title="Experience" onClick={() => handleCardClick("Experience")} isExpanded={isExpanded} />
+              <NavCard title="Projects" onClick={() => handleCardClick("Projects")} isExpanded={isExpanded} />
+              <NavCard title="Research" onClick={() => handleCardClick("Research")} isExpanded={isExpanded} />
             </div>
           </div>
           
@@ -208,6 +221,28 @@ export default function HomePage() {
         <ContactButton 
           onClick={() => {}} 
           isExpanded={isExpanded}
+        />
+
+        {/* Modals */}
+        <Modal
+          isOpen={activeModal === "About Me"}
+          onClose={handleModalClose}
+          title="About Me"
+        />
+        <Modal
+          isOpen={activeModal === "Experience"}
+          onClose={handleModalClose}
+          title="Experience"
+        />
+        <Modal
+          isOpen={activeModal === "Projects"}
+          onClose={handleModalClose}
+          title="Projects"
+        />
+        <Modal
+          isOpen={activeModal === "Research"}
+          onClose={handleModalClose}
+          title="Research"
         />
       </div>
     );
