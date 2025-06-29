@@ -13,7 +13,6 @@ interface ModalProps {
 export default function Modal({ isOpen, onClose, title, children }: ModalProps) {
   const [isAnimating, setIsAnimating] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [contactButtonAnimated, setContactButtonAnimated] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -22,12 +21,9 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
       // Small delay to ensure DOM is ready, then start animation
       setTimeout(() => {
         setIsAnimating(true);
-        // Start contact button animation after modal starts sliding
-        setTimeout(() => setContactButtonAnimated(true), 300);
       }, 10);
     } else {
       document.body.style.overflow = 'unset';
-      setContactButtonAnimated(false);
       setIsAnimating(false);
       // Keep modal visible during close animation
       setTimeout(() => {
@@ -70,7 +66,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
       
       {/* Modal container with slide-up and slide-down animations */}
       <div 
-        className={`relative w-full h-full m-6 bg-neutral-800 rounded-2xl shadow-2xl border border-neutral-700/50 overflow-hidden transform transition-all duration-700 ease-out ${
+        className={`relative w-full h-full mx-6 my-6 mt-16 bg-neutral-800 rounded-2xl shadow-2xl border border-neutral-700/50 overflow-hidden transform transition-all duration-700 ease-out ${
           isOpen && isAnimating
             ? 'translate-y-0 opacity-100' 
             : 'translate-y-full opacity-0'
@@ -93,7 +89,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
         </div>
         
         {/* Content */}
-        <div className="flex-1 overflow-y-auto px-8 pb-8 text-white relative">
+        <div className="flex-1 overflow-y-auto px-8 pb-24 text-white">
           {children || (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
@@ -103,28 +99,24 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
               </div>
             </div>
           )}
-          
-          {/* Contact Button in Modal with slide animation */}
-          <div 
-            className={`absolute bottom-8 transition-all duration-1000 ease-out ${
-              contactButtonAnimated 
-                ? 'right-8 opacity-100' 
-                : 'left-1/2 -translate-x-1/2 opacity-70'
-            } ${
-              isOpen ? '' : 'opacity-0'
-            }`}
+        </div>
+        
+        {/* Contact Button in Modal with fade-in animation */}
+        <div 
+          className={`absolute bottom-8 right-8 transition-opacity duration-700 ease-out ${
+            isOpen && isAnimating ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <button
+            onClick={() => {}}
+            className="bg-white text-black font-semibold px-10 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-100 transition-all duration-200 ease-out"
+            style={{
+              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(0, 0, 0, 0.1)'
+            }}
           >
-            <button
-              onClick={() => {}}
-              className="bg-white text-black font-semibold px-10 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 ease-out"
-              style={{
-                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 0, 0, 0.1)',
-                border: '1px solid rgba(0, 0, 0, 0.1)'
-              }}
-            >
-              Contact
-            </button>
-          </div>
+            Contact
+          </button>
         </div>
       </div>
     </div>

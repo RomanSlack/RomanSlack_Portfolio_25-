@@ -10,13 +10,13 @@ export default function NavCard({ title, onClick, isExpanded = false }: NavCardP
   return (
     <div
       onClick={onClick}
-      className={`h-full bg-neutral-800 text-white px-6 py-8 flex items-center justify-center hover:bg-neutral-900 hover:shadow-2xl hover:scale-105 transition-all duration-200 cursor-pointer shadow-lg relative ${
+      className={`h-full bg-neutral-800 text-white px-6 py-8 flex items-center justify-center hover:bg-neutral-900 hover:shadow-2xl hover:scale-100 transition-all duration-200 cursor-pointer shadow-lg relative ${
         isExpanded ? 'rounded-xl' : 'rounded-t-xl'
       }`}
     >
       {/* Landing mode text - visible in landing, fades out during transition */}
-      <h3 className={`text-xl font-semibold text-center transition-all duration-500 ease-in-out absolute ${
-        isExpanded ? 'opacity-0 transform scale-90' : 'opacity-100 transform scale-100'
+      <h3 className={`text-xl font-semibold text-center transition-opacity duration-500 ease-in-out absolute ${
+        isExpanded ? 'opacity-0' : 'opacity-100'
       }`}>{title}</h3>
       
       {/* Expanded mode circle with text - appears after text fades */}
@@ -32,8 +32,8 @@ export default function NavCard({ title, onClick, isExpanded = false }: NavCardP
           transitionDelay: isExpanded ? '300ms' : '0ms'
         }}
       >
-        <h3 className={`text-xl font-semibold text-center transition-all duration-2000 ease-in-out ${
-          isExpanded ? 'opacity-100 transform scale-100' : 'opacity-0 transform scale-75'
+        <h3 className={`text-xl font-semibold text-center transition-opacity duration-2000 ease-in-out ${
+          isExpanded ? 'opacity-100' : 'opacity-0'
         }`} 
         style={{
           transitionDelay: isExpanded ? '800ms' : '0ms'
