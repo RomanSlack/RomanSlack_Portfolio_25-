@@ -117,56 +117,36 @@ export default function HomePage() {
               </div>
             </div>
             
-            <div className={`w-2/5 relative pl-8 ${
-              isExpanded ? 'h-full' : 'flex flex-col items-center justify-end pb-0'
+            <div className={`w-2/5 relative pl-8 transition-all duration-1000 ease-in-out ${
+              isExpanded ? 'h-full mt-14 flex items-center justify-center' : 'flex flex-col items-center justify-end pb-0'
             }`}>
-              {isExpanded ? (
-                <div className="absolute left-1/2 transform -translate-x-1/2 transition-all duration-1000 w-[350px] h-[350px]">
-                  <Image
-                    src="/assets/roman.png"
-                    alt="Roman Slack Portrait"
-                    width={350}
-                    height={350}
-                    className="h-[350px] w-[350px] object-contain mx-auto z-10 relative"
+              <div className={`relative transition-all duration-1000 ease-in-out ${
+                isExpanded ? 'w-[350px] h-[350px]' : 'w-[500px] h-[500px] mb-0'
+              }`}>
+                <Image
+                  src="/assets/roman.png"
+                  alt="Roman Slack Portrait"
+                  width={isExpanded ? 350 : 500}
+                  height={isExpanded ? 350 : 500}
+                  className={`object-contain mx-auto z-10 relative transition-all duration-1000 ease-in-out ${
+                    isExpanded ? 'h-[350px] w-[350px]' : 'h-[500px] w-[500px]'
+                  }`}
+                />
+                
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <OrbitCarousel
+                    iconFolderPath="/assets/landing-icons"
+                    speedMs={90000}
+                    sizePx={isExpanded ? 45 : 60}
+                    circleOffsetX={-45}
+                    circleOffsetY={0}
+                    expandedCircleOffsetX={-125}
+                    expandedCircleOffsetY={0}
+                    isExpanded={isExpanded}
+                    radius={isExpanded ? 175 : 300}
                   />
-                  
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <OrbitCarousel
-                      iconFolderPath="/assets/landing-icons"
-                      speedMs={90000}
-                      sizePx={45}
-                      circleOffsetX={-45}
-                      circleOffsetY={0}
-                      expandedCircleOffsetX={-125}
-                      expandedCircleOffsetY={0}
-                      isExpanded={isExpanded}
-                      radius={175}
-                    />
-                  </div>
                 </div>
-              ) : (
-                <div className="relative mb-0">
-                  <Image
-                    src="/assets/roman.png"
-                    alt="Roman Slack Portrait"
-                    width={500}
-                    height={500}
-                    className="h-[500px] w-[500px] object-contain mx-auto z-10 relative"
-                  />
-                  
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <OrbitCarousel
-                      iconFolderPath="/assets/landing-icons"
-                      speedMs={90000}
-                      sizePx={60}
-                      circleOffsetX={-45}
-                      circleOffsetY={0}
-                      isExpanded={isExpanded}
-                      radius={300}
-                    />
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -214,7 +194,7 @@ export default function HomePage() {
               {/* Click Icon */}
               <div className="mb-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300">
                 <svg
-                  className="w-8 h-8 mx-auto"
+                  className="w-12 h-12 mx-auto"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

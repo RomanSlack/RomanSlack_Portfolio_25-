@@ -122,7 +122,7 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
           animation: counterRotate ${speedMs}ms linear infinite;
           transform-origin: center center;
           filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-          transition: transform 0.3s ease, filter 0.3s ease;
+          transition: transform 0.3s ease, filter 0.3s ease, left 1s ease-in-out, top 1s ease-in-out, width 1s ease-in-out, height 1s ease-in-out;
           cursor: pointer;
         }
         .icon-container:hover {
@@ -134,7 +134,7 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
       
       {/* Static background circle - independent positioning */}
       <div 
-        className="absolute border-4 border-gray-600 rounded-full"
+        className="absolute border-4 border-gray-600 rounded-full transition-all duration-1000 ease-in-out"
         style={{
           width: `${carouselRadius * 2}px`,
           height: `${carouselRadius * 2}px`,
