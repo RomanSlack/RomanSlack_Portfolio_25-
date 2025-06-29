@@ -154,11 +154,11 @@ export default function HomePage() {
         
         {/* Cards Section */}
         <div 
-          className={`transition-all ease-in-out bg-neutral-700 z-20 flex-1 relative ${
-            isTransitioning ? 'duration-200' : 'duration-1000'
+          className={`bg-neutral-700 z-20 flex-1 relative ${
+            isTransitioning ? 'duration-1000' : 'duration-1000'
           } ${
             isTransitioning 
-              ? 'transform translate-y-[-2px]' 
+              ? 'transform translate-y-[-10px]' 
               : isExpanded 
                 ? 'transform translate-y-0' 
                 : 'transform translate-y-0'
