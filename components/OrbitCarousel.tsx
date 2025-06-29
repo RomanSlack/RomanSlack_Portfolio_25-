@@ -9,11 +9,13 @@ interface OrbitCarouselProps {
   sizePx: number;
   circleOffsetX?: number;
   circleOffsetY?: number;
+  expandedCircleOffsetX?: number;
+  expandedCircleOffsetY?: number;
   radius?: number;
   isExpanded?: boolean;
 }
 
-export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleOffsetX = 0, circleOffsetY = 0, radius, isExpanded = false }: OrbitCarouselProps) {
+export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleOffsetX = 0, circleOffsetY = 0, expandedCircleOffsetX = 0, expandedCircleOffsetY = 0, radius, isExpanded = false }: OrbitCarouselProps) {
   const [iconPaths, setIconPaths] = useState<string[]>([]);
   const [skillsData, setSkillsData] = useState<Record<string, { name: string; years: number }>>({});
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
@@ -90,6 +92,8 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
   const carouselRadius = radius || (isExpanded ? 250 : 300);
   const centerX = 300;
   const centerY = 300;
+  const currentCircleOffsetX = isExpanded ? expandedCircleOffsetX : circleOffsetX;
+  const currentCircleOffsetY = isExpanded ? expandedCircleOffsetY : circleOffsetY;
 
   return (
     <div ref={wrapperRef} className="relative h-[600px] w-[600px]">
@@ -134,8 +138,8 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
         style={{
           width: `${carouselRadius * 2}px`,
           height: `${carouselRadius * 2}px`,
-          left: `${centerX - carouselRadius + circleOffsetX}px`,
-          top: `${centerY - carouselRadius + circleOffsetY}px`,
+          left: `${centerX - carouselRadius + currentCircleOffsetX}px`,
+          top: `${centerY - carouselRadius + currentCircleOffsetY}px`,
           opacity: 0.4
         }}
       />
