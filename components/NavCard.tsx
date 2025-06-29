@@ -10,12 +10,12 @@ export default function NavCard({ title, onClick, isExpanded = false }: NavCardP
   return (
     <div
       onClick={onClick}
-      className={`h-full bg-neutral-800 text-white px-6 py-8 flex flex-col items-center hover:bg-neutral-900 hover:shadow-2xl transition-all duration-1000 cursor-pointer shadow-lg ${
-        isExpanded ? 'justify-center rounded-xl' : 'justify-center rounded-t-xl'
+      className={`h-full bg-neutral-800 text-white px-6 py-8 flex items-center justify-center hover:bg-neutral-900 hover:shadow-2xl transition-all duration-1000 cursor-pointer shadow-lg relative ${
+        isExpanded ? 'rounded-xl' : 'rounded-t-xl'
       }`}
     >
       {/* Landing mode text - visible in landing, fades out during transition */}
-      <h3 className={`text-xl font-semibold text-center transition-all duration-500 ease-in-out ${
+      <h3 className={`text-xl font-semibold text-center transition-all duration-500 ease-in-out absolute ${
         isExpanded ? 'opacity-0 transform scale-90' : 'opacity-100 transform scale-100'
       }`}>{title}</h3>
       
