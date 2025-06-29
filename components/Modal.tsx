@@ -19,9 +19,11 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
       document.body.style.overflow = 'hidden';
       setShowModal(true);
       // Small delay to ensure DOM is ready, then start animation
-      setTimeout(() => {
-        setIsAnimating(true);
-      }, 10);
+      requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    setIsAnimating(true);
+  });
+});
     } else {
       document.body.style.overflow = 'unset';
       setIsAnimating(false);
@@ -55,7 +57,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
   if (!showModal) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex transition items-center justify-center">
       {/* Backdrop with blur effect */}
       <div 
         className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${
