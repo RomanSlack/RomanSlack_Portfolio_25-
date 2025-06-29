@@ -9,9 +9,11 @@ interface OrbitCarouselProps {
   sizePx: number;
   circleOffsetX?: number;
   circleOffsetY?: number;
+  radius?: number;
+  isExpanded?: boolean;
 }
 
-export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleOffsetX = 0, circleOffsetY = 0 }: OrbitCarouselProps) {
+export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleOffsetX = 0, circleOffsetY = 0, radius, isExpanded = false }: OrbitCarouselProps) {
   const [iconPaths, setIconPaths] = useState<string[]>([]);
   const [skillsData, setSkillsData] = useState<Record<string, { name: string; years: number }>>({});
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
@@ -85,7 +87,7 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
     setHoveredIcon(null);
   };
 
-  const radius = 300;
+  const carouselRadius = radius || (isExpanded ? 250 : 300);
   const centerX = 300;
   const centerY = 300;
 
@@ -130,10 +132,10 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
       <div 
         className="absolute border-4 border-gray-600 rounded-full"
         style={{
-          width: `${radius * 2}px`,
-          height: `${radius * 2}px`,
-          left: `${centerX - radius + circleOffsetX}px`,
-          top: `${centerY - radius + circleOffsetY}px`,
+          width: `${carouselRadius * 2}px`,
+          height: `${carouselRadius * 2}px`,
+          left: `${centerX - carouselRadius + circleOffsetX}px`,
+          top: `${centerY - carouselRadius + circleOffsetY}px`,
           opacity: 0.4
         }}
       />
@@ -143,8 +145,8 @@ export default function OrbitCarousel({ iconFolderPath, speedMs, sizePx, circleO
           // Start at top (270 degrees or -90 degrees) and go clockwise
           const angle = -90 + (360 / iconPaths.length) * index;
           const radian = (angle * Math.PI) / 180;
-          const x = radius * Math.cos(radian) - sizePx / 2;
-          const y = radius * Math.sin(radian) - sizePx / 2;
+          const x = carouselRadius * Math.cos(radian) - sizePx / 2;
+          const y = carouselRadius * Math.sin(radian) - sizePx / 2;
 
           return (
             <div

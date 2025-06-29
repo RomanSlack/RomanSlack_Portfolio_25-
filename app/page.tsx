@@ -117,23 +117,31 @@ export default function HomePage() {
               </div>
             </div>
             
-            <div className="w-2/5 flex flex-col items-center justify-end relative pl-8 pb-0">
-              <div className="relative mb-0">
+            <div className={`w-2/5 flex flex-col items-center relative pl-8 ${
+              isExpanded ? 'justify-end pb-0' : 'justify-end pb-0'
+            }`}>
+              <div className={`relative transition-all duration-1000 ${
+                isExpanded ? 'mb-0 mt-16' : 'mb-0'
+              }`}>
                 <Image
                   src="/assets/roman.png"
                   alt="Roman Slack Portrait"
-                  width={500}
-                  height={500}
-                  className="h-[500px] w-[500px] object-contain mx-auto z-10 relative"
+                  width={isExpanded ? 350 : 500}
+                  height={isExpanded ? 350 : 500}
+                  className={`object-contain mx-auto z-10 relative transition-all duration-1000 ${
+                    isExpanded ? 'h-[350px] w-[350px]' : 'h-[500px] w-[500px]'
+                  }`}
                 />
                 
                 <div className="absolute inset-0 flex items-center justify-center">
                   <OrbitCarousel
                     iconFolderPath="/assets/landing-icons"
                     speedMs={90000}
-                    sizePx={60}
+                    sizePx={isExpanded ? 45 : 60}
                     circleOffsetX={-45}
                     circleOffsetY={0}
+                    isExpanded={isExpanded}
+                    radius={isExpanded ? 175 : 300}
                   />
                 </div>
               </div>
