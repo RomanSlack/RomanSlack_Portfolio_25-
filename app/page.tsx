@@ -106,9 +106,15 @@ export default function HomePage() {
               </div>
             </div>
             
-            <div className={`w-2/5 relative pl-8 transition-all duration-1000 ease-in-out ${
-              isExpanded ? 'h-full mt-14 flex items-center justify-center' : 'flex flex-col items-center justify-end pb-0'
-            }`}>
+            <div 
+              className={`w-2/5 relative pl-8 transition-all duration-1000 ease-in-out ${
+                isExpanded ? 'h-full flex items-center justify-center' : 'flex flex-col items-center justify-end pb-0'
+              }`}
+              style={{
+                marginTop: isExpanded ? '3.5rem' : '0',
+                transitionDelay: isExpanded ? '300ms' : '0ms'
+              }}
+            >
               <div className={`relative transition-all duration-1000 ease-in-out ${
                 isExpanded ? 'w-[350px] h-[350px]' : 'w-[500px] h-[500px] mb-0'
               }`}>
