@@ -32,11 +32,11 @@ export default function NavCard({ title, onClick, isExpanded = false }: NavCardP
           transitionDelay: isExpanded ? '300ms' : '0ms'
         }}
       >
-        <h3 className={`text-xl font-semibold text-center transition-all duration-700 ease-in-out ${
+        <h3 className={`text-xl font-semibold text-center transition-all duration-2000 ease-in-out ${
           isExpanded ? 'opacity-100 transform scale-100' : 'opacity-0 transform scale-75'
         }`} 
         style={{
-          transitionDelay: isExpanded ? '500ms' : '0ms'
+          transitionDelay: isExpanded ? '800ms' : '0ms'
         }}>{title}</h3>
       </div>
     </div>
