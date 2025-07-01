@@ -1,23 +1,20 @@
 'use client';
 
-import { useIsMobile } from '../hooks/useIsMobile';
-import PageMobile from '../components/PageMobile';
-
 import Image from 'next/image';
 import { IoNewspaperOutline } from "react-icons/io5";
 import { useEffect, useState } from 'react';
-import OrbitCarousel from '../components/OrbitCarousel';
-import NavCard from '../components/NavCard';
-import TypewriterText from '../components/TypewriterText';
-import ContactButton from '../components/ContactButton';
-import Modal from '../components/Modal';
-import ContactModal from '../components/ContactModal';
-import AboutContent from '../components/card-content/AboutContent';
-import ExperienceContent from '../components/card-content/ExperienceContent';
-import ProjectsContent from '../components/card-content/ProjectsContent';
-import ResearchContent from '../components/card-content/ResearchContent';
+import OrbitCarouselMobile from './OrbitCarouselMobile';
+import NavCardMobile from './NavCardMobile';
+import TypewriterText from './TypewriterText';
+import ContactButtonMobile from './ContactButtonMobile';
+import ModalMobile from './ModalMobile';
+import ContactModalMobile from './ContactModalMobile';
+import AboutContent from './card-content/AboutContent';
+import ExperienceContent from './card-content/ExperienceContent';
+import ProjectsContent from './card-content/ProjectsContent';
+import ResearchContent from './card-content/ResearchContent';
 
-function DesktopPage() {
+export default function PageMobile() {
   const [titles, setTitles] = useState<string[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -178,7 +175,7 @@ function DesktopPage() {
                 />
                 
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <OrbitCarousel
+                  <OrbitCarouselMobile
                     iconFolderPath="/assets/landing-icons"
                     speedMs={90000}
                     sizePx={isExpanded ? 45 : 60}
@@ -213,10 +210,10 @@ function DesktopPage() {
                 flex: isExpanded ? 'none' : '1'
               }}
             >
-              <NavCard title="About Me" onClick={() => handleCardClick("About Me")} isExpanded={isExpanded} />
-              <NavCard title="Experience" onClick={() => handleCardClick("Experience")} isExpanded={isExpanded} />
-              <NavCard title="Projects" onClick={() => handleCardClick("Projects")} isExpanded={isExpanded} />
-              <NavCard title="Research" onClick={() => handleCardClick("Research")} isExpanded={isExpanded} />
+              <NavCardMobile title="About Me" onClick={() => handleCardClick("About Me")} isExpanded={isExpanded} />
+              <NavCardMobile title="Experience" onClick={() => handleCardClick("Experience")} isExpanded={isExpanded} />
+              <NavCardMobile title="Projects" onClick={() => handleCardClick("Projects")} isExpanded={isExpanded} />
+              <NavCardMobile title="Research" onClick={() => handleCardClick("Research")} isExpanded={isExpanded} />
             </div>
           </div>
           
@@ -254,56 +251,50 @@ function DesktopPage() {
           </div>
         </div>
       
-        <ContactButton 
+        <ContactButtonMobile 
           onClick={handleContactClick} 
           isExpanded={isExpanded}
         />
 
         {/* Modals */}
-        <Modal
+        <ModalMobile
           isOpen={activeModal === "About Me"}
           onClose={handleModalClose}
           title="About Me"
           colorSquares={['bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-cyan-500']}
         >
           <AboutContent />
-        </Modal>
-        <Modal
+        </ModalMobile>
+        <ModalMobile
           isOpen={activeModal === "Experience"}
           onClose={handleModalClose}
           title="Experience"
           colorSquares={['bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-orange-500']}
         >
           <ExperienceContent />
-        </Modal>
-        <Modal
+        </ModalMobile>
+        <ModalMobile
           isOpen={activeModal === "Projects"}
           onClose={handleModalClose}
           title="Projects"
           colorSquares={['bg-emerald-500', 'bg-teal-500', 'bg-sky-500', 'bg-violet-500']}
         >
           <ProjectsContent />
-        </Modal>
-        <Modal
+        </ModalMobile>
+        <ModalMobile
           isOpen={activeModal === "Research"}
           onClose={handleModalClose}
           title="Research"
           colorSquares={['bg-red-500', 'bg-amber-500', 'bg-lime-500', 'bg-rose-500']}
         >
           <ResearchContent />
-        </Modal>
+        </ModalMobile>
 
         {/* Contact Modal */}
-        <ContactModal
+        <ContactModalMobile
           isOpen={showContactModal}
           onClose={handleContactModalClose}
         />
       </div>
     );
-}
-
-export default function HomePage() {
-  const isMobile = useIsMobile();
-  
-  return isMobile ? <PageMobile /> : <DesktopPage />;
-}
+  }
