@@ -103,7 +103,7 @@ export default function HomePage() {
                 {titles.length > 0 && <TypewriterText titles={titles} pauseDuration={5000} delayAfterErase={1500} />}
               </h1>
               
-              <div className="flex gap-4 mb-8">
+              <div className="flex gap-4 mb-8 items-center">
                 <button
                   onClick={() => window.open('https://www.linkedin.com/in/roman-slack-a91a6a266/', '_blank')}
                   className="hover:scale-110 transition-transform duration-200"
@@ -134,7 +134,7 @@ export default function HomePage() {
                   </svg>
                 </button>
                 
-                <div className="relative group">
+                <div className="relative group flex items-center">
                   <button
                     onClick={() => window.open('/assets/resume.pdf', '_blank')}
                     className="hover:scale-110 transition-transform duration-200"
