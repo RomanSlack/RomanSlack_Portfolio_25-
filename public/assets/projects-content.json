@@ -1,0 +1,26 @@
+{
+  "title": "Projects",
+  "projects": [
+    {
+      "title": "SimuVerse",
+      "description": "An AI simulation framework designed to explore multi-agent collaboration using large language models (LLMs). Built in Unity with Python-Langchain backend, featuring tool-chaining, interpreter-based agent communication, and 3D visualization. Led technical architecture and implementation, optimizing agent memory and Unity synchronization.",
+      "technologies": ["Unity", "Python", "Langchain", "LLMs", "3D Simulation"],
+      "status": "In Progress",
+      "statusColor": "bg-blue-500/20 text-blue-400"
+    },
+    {
+      "title": "Aegis Intercept",
+      "description": "An open-source missile defense gym using reinforcement learning. Developed 2D and 6DOF adversarial environments, integrating PPO, curriculum learning, and hierarchical policies. Emphasizes reproducibility and defense research alignment.",
+      "technologies": ["Python", "PyTorch", "Gymnasium", "PPO", "Reinforcement Learning"],
+      "status": "Active Development",
+      "statusColor": "bg-green-500/20 text-green-400"
+    },
+    {
+      "title": "Juris",
+      "description": "An enterprise-grade RAG platform for legal document processing. Includes multi-container FastAPI microservices, OpenAI LLM integration, and production-level deployment on Akash and Azure. Developed entire backend architecture with vector indexing and CI/CD automation.",
+      "technologies": ["FastAPI", "OpenAI", "Docker", "Azure", "Vector DB", "RAG"],
+      "status": "In Progress",
+      "statusColor": "bg-purple-500/20 text-purple-400"
+    }
+  ]
+}

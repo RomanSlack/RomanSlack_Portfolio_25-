@@ -1,0 +1,37 @@
+{
+  "title": "Experience",
+  "experiences": [
+    {
+      "position": "AI Research Intern",
+      "company": "AFRL Information Directorate",
+      "period": "June 2025 - August 2025",
+      "borderColor": "border-blue-500",
+      "companyColor": "text-blue-400",
+      "description": "Worked in a secure research environment to design and evaluate AI-driven virtual systems for defense. Contributed to custom algorithms, agent interactions, and advanced simulation tasks. Applied novel architectures to push performance boundaries in classified multi-agent and adversarial settings."
+    },
+    {
+      "position": "AI / Fullstack Engineer", 
+      "company": "Levangie Laboratories",
+      "period": "Nov 2024 - March 2025",
+      "borderColor": "border-green-500",
+      "companyColor": "text-green-400",
+      "description": "Developed agentic AI systems integrating both front-end interfaces and backend processing. Worked in a startup setting, optimizing data pipelines and model behavior. Implemented production-ready systems with strong Git-based version control."
+    },
+    {
+      "position": "Founder and CEO",
+      "company": "NextGen Programming Camp", 
+      "period": "June 2023 - Present",
+      "borderColor": "border-purple-500",
+      "companyColor": "text-purple-400",
+      "description": "Created and scaled a free programming camp to serve over 100 underserved students annually. Taught Agile programming practices and organized partnerships with nonprofits and government sponsors. Spearheaded all aspects from curriculum to logistics."
+    },
+    {
+      "position": "Freelance Fullstack Developer",
+      "company": "Tick-It", 
+      "period": "Aug 2024 - Sept 2024",
+      "borderColor": "border-orange-500",
+      "companyColor": "text-orange-400",
+      "description": "Built a cross-platform ticketing/eCommerce app in Flutter with backend integration using Google Cloud Platform. Focused on clean UI, scalability, and deployment-ready code for a startup client."
+    }
+  ]
+}

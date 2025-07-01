@@ -1,0 +1,24 @@
+{
+  "title": "About Me",
+  "sections": [
+    {
+      "heading": "About Me",
+      "content": "Roman Slack is a 19-year-old AI-focused Computer Science student at Rochester Institute of Technology (RIT), currently working as an AI Research Intern at the Air Force Research Laboratory (AFRL). With a passion for building intelligent systems and open-source tools, Roman has cultivated expertise across full-stack development, reinforcement learning environments, and agent-based simulations."
+    },
+    {
+      "heading": "Background", 
+      "content": "Roman's work spans from founding a nonprofit programming camp to leading cutting-edge research with defense applications. He actively contributes to the open-source community and maintains a growing GitHub portfolio of experimental and production-ready AI tools, focusing heavily on agentic LLMs, AI pipelines in Unity environments, and scalable RL infrastructure."
+    },
+    {
+      "heading": "Core Interests",
+      "type": "list",
+      "items": [
+        "Agentic Large Language Models & AI Pipelines",
+        "Multi-Agent Systems & Simulation Environments",
+        "Reinforcement Learning & Defense Applications",
+        "Full-Stack Development & Open-Source Tools",
+        "AI Research & Virtual System Design"
+      ]
+    }
+  ]
+}

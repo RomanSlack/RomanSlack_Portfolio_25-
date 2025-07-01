@@ -1,0 +1,53 @@
+{
+  "title": "Research",
+  "researchInterests": {
+    "title": "Research Focus Areas",
+    "areas": [
+      {
+        "title": "Multi-Agent AI Systems",
+        "description": "LLM-based agent cognition, memory, and interaction in virtual environments"
+      },
+      {
+        "title": "Reinforcement Learning", 
+        "description": "Defense applications, adversarial environments, and constraint-based learning"
+      },
+      {
+        "title": "AI Simulation Frameworks",
+        "description": "Unity-integrated AI pipelines and scalable simulation architecture"
+      },
+      {
+        "title": "Defense AI Applications",
+        "description": "Classified multi-agent systems and adversarial AI for national security"
+      }
+    ]
+  },
+  "publications": {
+    "title": "Research Experience & Future Work",
+    "papers": [
+      {
+        "title": "AI-Driven Virtual Systems for Defense Applications",
+        "journal": "AFRL Information Directorate Research",
+        "year": "2025",
+        "status": "In Progress",
+        "statusColor": "bg-blue-500/20 text-blue-400",
+        "abstract": "Contributing to classified research on custom algorithms, agent interactions, and advanced simulation tasks. Applying novel architectures to push performance boundaries in multi-agent and adversarial settings for defense applications."
+      },
+      {
+        "title": "SimuVerse: LLM-Based Multi-Agent Collaboration Framework",
+        "journal": "Open Source Research Project", 
+        "year": "2024-2025",
+        "status": "Active Research",
+        "statusColor": "bg-green-500/20 text-green-400",
+        "abstract": "Exploring the role of large language models in simulating cognition, memory, and interaction within virtual environments. Focus on agent memory enhancement, tool-chaining, and Unity synchronization for scalable AI simulation platforms."
+      },
+      {
+        "title": "Reinforcement Learning for Missile Defense Systems",
+        "journal": "Aegis Intercept Open Source Project",
+        "year": "2025", 
+        "status": "Development",
+        "statusColor": "bg-purple-500/20 text-purple-400",
+        "abstract": "Academic-level rigor in designing scalable, testable defense simulations. Focus on PPO integration, curriculum learning, and hierarchical policies for adversarial environments with reproducible research outcomes."
+      }
+    ]
+  }
+}

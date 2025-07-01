@@ -8,9 +8,10 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children?: React.ReactNode;
+  colorSquares?: string[];
 }
 
-export default function Modal({ isOpen, onClose, title, children }: ModalProps) {
+export default function Modal({ isOpen, onClose, title, children, colorSquares = ['bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-red-500'] }: ModalProps) {
   const [isAnimating, setIsAnimating] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -74,24 +75,32 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
             : 'translate-y-full opacity-0'
         }`}
       >
-        {/* Title and Back Button */}
-        <div className="flex items-start justify-between p-8 pb-4">
-          <h2 className="text-4xl font-bold text-white">
-            {title}
-          </h2>
-          
+        {/* Back Button */}
+        <div className="absolute top-8 right-8 z-10">
           <button
             onClick={onClose}
-            className="flex items-center gap-2 text-white hover:text-neutral-300 transition-colors duration-200 group ml-8"
+            className="flex items-center gap-2 text-white hover:text-neutral-300 transition-colors duration-200 group"
             aria-label="Go back"
           >
             <IoArrowBack className="w-6 h-6 group-hover:transform group-hover:translate-x-1 transition-transform duration-200" />
             <span className="text-lg font-medium">Back</span>
           </button>
         </div>
+
+        {/* Title and Color Squares */}
+        <div className="pt-12 px-32 pb-6">
+          <h2 className="text-5xl font-bold text-white mb-4">
+            {title}
+          </h2>
+          <div className="flex gap-3">
+            {colorSquares.map((color, index) => (
+              <div key={index} className={`w-4 h-4 ${color} rounded-sm`}></div>
+            ))}
+          </div>
+        </div>
         
         {/* Content */}
-        <div className="flex-1 overflow-y-auto px-8 pb-24 text-white">
+        <div className="flex-1 px-32 pb-8 text-white overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-600 scrollbar-track-neutral-800">
           {children || (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">

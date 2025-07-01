@@ -9,6 +9,10 @@ import TypewriterText from '../components/TypewriterText';
 import ContactButton from '../components/ContactButton';
 import Modal from '../components/Modal';
 import ContactModal from '../components/ContactModal';
+import AboutContent from '../components/card-content/AboutContent';
+import ExperienceContent from '../components/card-content/ExperienceContent';
+import ProjectsContent from '../components/card-content/ProjectsContent';
+import ResearchContent from '../components/card-content/ResearchContent';
 
 export default function HomePage() {
   const [titles, setTitles] = useState<string[]>([]);
@@ -101,6 +105,7 @@ export default function HomePage() {
               
               <div className="flex gap-4 mb-8">
                 <button
+                  onClick={() => window.open('https://www.linkedin.com/in/roman-slack-a91a6a266/', '_blank')}
                   className="hover:scale-110 transition-transform duration-200"
                   aria-label="LinkedIn Profile"
                 >
@@ -115,6 +120,7 @@ export default function HomePage() {
                 </button>
                 
                 <button
+                  onClick={() => window.open('https://github.com/romanslack', '_blank')}
                   className="hover:scale-110 transition-transform duration-200"
                   aria-label="GitHub Profile"
                 >
@@ -129,6 +135,7 @@ export default function HomePage() {
                 </button>
                 
                 <button
+                  onClick={() => window.open('/assets/resume.pdf', '_blank')}
                   className="hover:scale-110 transition-transform duration-200"
                   aria-label="Resume"
                 >
@@ -246,22 +253,34 @@ export default function HomePage() {
           isOpen={activeModal === "About Me"}
           onClose={handleModalClose}
           title="About Me"
-        />
+          colorSquares={['bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-cyan-500']}
+        >
+          <AboutContent />
+        </Modal>
         <Modal
           isOpen={activeModal === "Experience"}
           onClose={handleModalClose}
           title="Experience"
-        />
+          colorSquares={['bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-orange-500']}
+        >
+          <ExperienceContent />
+        </Modal>
         <Modal
           isOpen={activeModal === "Projects"}
           onClose={handleModalClose}
           title="Projects"
-        />
+          colorSquares={['bg-emerald-500', 'bg-teal-500', 'bg-sky-500', 'bg-violet-500']}
+        >
+          <ProjectsContent />
+        </Modal>
         <Modal
           isOpen={activeModal === "Research"}
           onClose={handleModalClose}
           title="Research"
-        />
+          colorSquares={['bg-red-500', 'bg-amber-500', 'bg-lime-500', 'bg-rose-500']}
+        >
+          <ResearchContent />
+        </Modal>
 
         {/* Contact Modal */}
         <ContactModal
