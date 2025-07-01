@@ -21,16 +21,16 @@
       "position": "Founder and CEO",
       "company": "NextGen Programming Camp", 
       "period": "June 2023 - Present",
-      "borderColor": "border-purple-500",
-      "companyColor": "text-purple-400",
+      "borderColor": "border-yellow-500",
+      "companyColor": "text-yellow-400",
       "description": "Created and scaled a free programming camp to serve over 100 underserved students annually. Taught Agile programming practices and organized partnerships with nonprofits and government sponsors. Spearheaded all aspects from curriculum to logistics."
     },
     {
       "position": "Freelance Fullstack Developer",
       "company": "Tick-It", 
       "period": "Aug 2024 - Sept 2024",
-      "borderColor": "border-orange-500",
-      "companyColor": "text-orange-400",
+      "borderColor": "border-amber-500",
+      "companyColor": "text-amber-400",
       "description": "Built a cross-platform ticketing/eCommerce app in Flutter with backend integration using Google Cloud Platform. Focused on clean UI, scalability, and deployment-ready code for a startup client."
     }
   ]

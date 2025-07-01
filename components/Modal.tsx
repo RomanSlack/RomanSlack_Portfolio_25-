@@ -69,7 +69,7 @@ export default function Modal({ isOpen, onClose, title, children, colorSquares =
       
       {/* Modal container with slide-up and slide-down animations */}
       <div 
-        className={`relative w-full h-full mx-6 my-6 mt-16 bg-neutral-800 rounded-2xl shadow-2xl border border-neutral-700/50 overflow-hidden transform transition-all duration-700 ease-out ${
+        className={`relative w-full h-full mx-6 my-6 mt-16 bg-neutral-800 rounded-2xl shadow-2xl border border-neutral-700/50 transform transition-all duration-700 ease-out flex flex-col ${
           isOpen && isAnimating
             ? 'translate-y-0 opacity-100' 
             : 'translate-y-full opacity-0'
@@ -100,7 +100,11 @@ export default function Modal({ isOpen, onClose, title, children, colorSquares =
         </div>
         
         {/* Content */}
-        <div className="flex-1 px-32 pb-8 text-white overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-600 scrollbar-track-neutral-800">
+        <div className="flex-1 px-32 pb-8 text-white overflow-y-auto" style={{
+          scrollbarWidth: 'thin',
+          scrollbarColor: '#525252 #262626',
+          height: '0'
+        }}>
           {children || (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">

@@ -1,7 +1,7 @@
 {
   "title": "Research",
   "researchInterests": {
-    "title": "Research Focus Areas",
+    "title": "Focus Areas",
     "areas": [
       {
         "title": "Multi-Agent AI Systems",
@@ -22,7 +22,7 @@
     ]
   },
   "publications": {
-    "title": "Research Experience & Future Work",
+    "title": "Experience & Future Work",
     "papers": [
       {
         "title": "AI-Driven Virtual Systems for Defense Applications",
