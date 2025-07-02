@@ -16,7 +16,6 @@ import ResearchContent from './card-content/ResearchContent';
 
 export default function PageMobile() {
   const [titles, setTitles] = useState<string[]>([]);
-  const [isExpanded, setIsExpanded] = useState(false);
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [showContactModal, setShowContactModal] = useState(false);
 
@@ -36,33 +35,18 @@ export default function PageMobile() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50 && !isExpanded) {
-        setIsExpanded(true);
-      }
-    };
-
     const handleOpenContactModal = () => {
       setShowContactModal(true);
     };
 
-    window.addEventListener('scroll', handleScroll);
     window.addEventListener('openContactModal', handleOpenContactModal);
     
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('openContactModal', handleOpenContactModal);
     };
-  }, [isExpanded]);
-
-  const handleTransition = () => {
-    setIsExpanded(true);
-  };
+  }, []);
 
   const handleCardClick = (cardTitle: string) => {
-    if (!isExpanded) {
-      handleTransition();
-    }
     setActiveModal(cardTitle);
   };
 
@@ -80,221 +64,151 @@ export default function PageMobile() {
 
   return (
     <div className="h-screen bg-neutral-900 text-white flex flex-col overflow-hidden">
-      {/* Header Section */}
-      <div 
-        className="transition-all duration-1000 ease-in-out"
-        style={{
-          height: isExpanded ? '33.333333%' : '66.666667%'
-        }}
-      >
-        <div 
-          className={`container mx-auto px-8 h-full transition-all duration-1000 ease-in-out ${
-            isExpanded ? 'py-8' : 'py-0'
-          }`}
-        >
-          <div 
-            className={`flex flex-row h-full transition-all duration-1000 ease-in-out origin-center ${
-              isExpanded ? 'scale-75' : 'scale-100'
-            }`}
-          >
-            <div className={`w-3/5 flex flex-col pr-16 pl-4 ${isExpanded ? 'justify-center' : 'justify-end pb-16'}`}>
-              <h1 className="text-7xl font-semibold leading-tight text-white mb-8 max-w-4xl">
-                Roman Slack is a,<br />
-                {titles.length > 0 && <TypewriterText titles={titles} pauseDuration={5000} delayAfterErase={1500} />}
-              </h1>
-              
-              <div className="flex gap-4 mb-8 items-center">
-                <button
-                  onClick={() => window.open('https://www.linkedin.com/in/roman-slack-a91a6a266/', '_blank')}
-                  className="hover:scale-110 transition-transform duration-200"
-                  aria-label="LinkedIn Profile"
-                >
-                  <svg
-                    className="w-12 h-12 text-white hover:text-blue-400"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </button>
-                
-                <button
-                  onClick={() => window.open('https://github.com/romanslack', '_blank')}
-                  className="hover:scale-110 transition-transform duration-200"
-                  aria-label="GitHub Profile"
-                >
-                  <svg
-                    className="w-12 h-12 text-white hover:text-gray-400"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                  </svg>
-                </button>
-                
-                <div className="relative group flex items-center">
-                  <button
-                    onClick={() => window.open('/assets/resume.pdf', '_blank')}
-                    className="hover:scale-110 transition-transform duration-200"
-                    aria-label="Resume"
-                  >
-                    <IoNewspaperOutline className="w-12 h-12 text-white hover:text-orange-400" />
-                  </button>
-                  
-                  {/* Tooltip */}
-                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-neutral-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none shadow-lg border border-neutral-700">
-                    View Resume
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-neutral-800"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div 
-              className={`w-2/5 relative pl-8 transition-all duration-1000 ease-in-out ${
-                isExpanded ? 'h-full flex items-center justify-center' : 'flex flex-col items-center justify-end pb-0'
-              }`}
-              style={{
-                marginTop: isExpanded ? '3.5rem' : '0',
-                transitionDelay: isExpanded ? '300ms' : '0ms'
-              }}
-            >
-              <div className={`relative transition-all duration-1000 ease-in-out ${
-                isExpanded ? 'w-[350px] h-[350px]' : 'w-[500px] h-[500px] mb-0'
-              }`}>
-                <Image
-                  src="/assets/roman.png"
-                  alt="Roman Slack Portrait"
-                  width={isExpanded ? 350 : 500}
-                  height={isExpanded ? 350 : 500}
-                  className={`object-contain mx-auto z-10 relative transition-all duration-1000 ease-in-out ${
-                    isExpanded ? 'h-[350px] w-[350px]' : 'h-[500px] w-[500px]'
-                  }`}
-                />
-                
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <OrbitCarouselMobile
-                    iconFolderPath="/assets/landing-icons"
-                    speedMs={90000}
-                    sizePx={isExpanded ? 45 : 60}
-                    circleOffsetX={-45}
-                    circleOffsetY={0}
-                    expandedCircleOffsetX={-125}
-                    expandedCircleOffsetY={0}
-                    isExpanded={isExpanded}
-                    radius={isExpanded ? 175 : 300}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Top Section: Profile + Title + Social Icons */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 pt-8">
         
-        {/* Cards Section */}
-        <div 
-          className="bg-neutral-700 z-20 flex-1 relative transition-all duration-1000 ease-in-out"
-        >
-          <div 
-            className={`container mx-auto px-8 h-full flex flex-col relative transition-all duration-1000 ease-in-out ${
-              isExpanded ? 'justify-center py-16' : 'justify-start pt-8 pb-0'
-            }`}
-          >
-            <div 
-              className="grid gap-8 w-full mx-auto transition-all duration-1000 ease-in-out grid-cols-4"
-              style={{
-                maxWidth: isExpanded ? '100%' : '1024px',
-                height: isExpanded ? '384px' : '100%',
-                flex: isExpanded ? 'none' : '1'
-              }}
-            >
-              <NavCardMobile title="About Me" onClick={() => handleCardClick("About Me")} isExpanded={isExpanded} />
-              <NavCardMobile title="Experience" onClick={() => handleCardClick("Experience")} isExpanded={isExpanded} />
-              <NavCardMobile title="Projects" onClick={() => handleCardClick("Projects")} isExpanded={isExpanded} />
-              <NavCardMobile title="Research" onClick={() => handleCardClick("Research")} isExpanded={isExpanded} />
-            </div>
-          </div>
-          
-          {/* Frosted Glass Overlay for Landing Mode */}
-          <div 
-            onClick={handleTransition}
-            className={`absolute inset-0 bg-white/8 backdrop-blur-[2px] hover:bg-white/12 cursor-pointer flex items-center justify-center group transition-all duration-1000 ${
-              isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-100'
-            }`}
-          >
-            <div className="text-white text-center">
-              {/* Click Icon */}
-              <div className="mb-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300">
-                <svg
-                  className="w-12 h-12 mx-auto"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
-                  />
-                </svg>
-              </div>
-              
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="text-lg font-semibold mb-2">Explore Portfolio</div>
-                <div className="text-sm text-gray-300">Click to continue</div>
-              </div>
+        {/* Profile Image with Orbit Carousel */}
+        <div className="relative mb-4">
+          <div className="relative w-[200px] h-[200px]">
+            <Image
+              src="/assets/roman.png"
+              alt="Roman Slack Portrait"
+              width={200}
+              height={200}
+              className="object-contain mx-auto z-10 relative h-[200px] w-[200px]"
+            />
+            
+            <div className="absolute inset-0 flex items-center justify-center">
+              <OrbitCarouselMobile
+                iconFolderPath="/assets/landing-icons"
+                speedMs={90000}
+                sizePx={30}
+                circleOffsetX={0}
+                circleOffsetY={0}
+                expandedCircleOffsetX={0}
+                expandedCircleOffsetY={0}
+                isExpanded={false}
+                radius={100}
+              />
             </div>
           </div>
         </div>
-      
-        <ContactButtonMobile 
-          onClick={handleContactClick} 
-          isExpanded={isExpanded}
-        />
 
-        {/* Modals */}
-        <ModalMobile
-          isOpen={activeModal === "About Me"}
-          onClose={handleModalClose}
-          title="About Me"
-          colorSquares={['bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-cyan-500']}
-        >
-          <AboutContent />
-        </ModalMobile>
-        <ModalMobile
-          isOpen={activeModal === "Experience"}
-          onClose={handleModalClose}
-          title="Experience"
-          colorSquares={['bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-orange-500']}
-        >
-          <ExperienceContent />
-        </ModalMobile>
-        <ModalMobile
-          isOpen={activeModal === "Projects"}
-          onClose={handleModalClose}
-          title="Projects"
-          colorSquares={['bg-emerald-500', 'bg-teal-500', 'bg-sky-500', 'bg-violet-500']}
-        >
-          <ProjectsContent />
-        </ModalMobile>
-        <ModalMobile
-          isOpen={activeModal === "Research"}
-          onClose={handleModalClose}
-          title="Research"
-          colorSquares={['bg-red-500', 'bg-amber-500', 'bg-lime-500', 'bg-rose-500']}
-        >
-          <ResearchContent />
-        </ModalMobile>
+        {/* Title and Role */}
+        <div className="text-center mb-4">
+          <h1 className="text-2xl font-semibold leading-tight text-white">
+            Roman Slack is a,<br />
+            {titles.length > 0 && <TypewriterText titles={titles} pauseDuration={5000} delayAfterErase={1500} />}
+          </h1>
+        </div>
 
-        {/* Contact Modal */}
-        <ContactModalMobile
-          isOpen={showContactModal}
-          onClose={handleContactModalClose}
-        />
+        {/* Social Icons */}
+        <div className="flex gap-4 mb-6 items-center justify-center">
+          <button
+            onClick={() => window.open('https://www.linkedin.com/in/roman-slack-a91a6a266/', '_blank')}
+            className="active:scale-95 transition-transform duration-200 p-2 min-h-[44px] min-w-[44px]"
+            aria-label="LinkedIn Profile"
+          >
+            <svg
+              className="w-8 h-8 text-white active:text-blue-400"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </button>
+          
+          <button
+            onClick={() => window.open('https://github.com/romanslack', '_blank')}
+            className="active:scale-95 transition-transform duration-200 p-2 min-h-[44px] min-w-[44px]"
+            aria-label="GitHub Profile"
+          >
+            <svg
+              className="w-8 h-8 text-white active:text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </button>
+          
+          <div className="relative group flex items-center">
+            <button
+              onClick={() => window.open('/assets/resume.pdf', '_blank')}
+              className="active:scale-95 transition-transform duration-200 p-2 min-h-[44px] min-w-[44px]"
+              aria-label="Resume"
+            >
+              <IoNewspaperOutline className="w-8 h-8 text-white active:text-orange-400" />
+            </button>
+          </div>
+        </div>
       </div>
+
+      {/* Bottom Section: Navigation Cards */}
+      <div className="bg-neutral-700 px-4 py-6">
+        <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+          <NavCardMobile title="About Me" onClick={() => handleCardClick("About Me")} isExpanded={true} />
+          <NavCardMobile title="Experience" onClick={() => handleCardClick("Experience")} isExpanded={true} />
+          <NavCardMobile title="Projects" onClick={() => handleCardClick("Projects")} isExpanded={true} />
+          <NavCardMobile title="Research" onClick={() => handleCardClick("Research")} isExpanded={true} />
+        </div>
+      </div>
+
+      {/* Contact Button - Bottom Center */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+        <button
+          onClick={handleContactClick}
+          className="bg-white text-black font-semibold shadow-lg active:shadow-xl active:bg-neutral-300 px-6 py-3 text-base rounded-xl transition-all duration-200 ease-out min-h-[44px] min-w-[44px]"
+          style={{
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(0, 0, 0, 0.1)'
+          }}
+        >
+          Contact
+        </button>
+      </div>
+
+      {/* Modals */}
+      <ModalMobile
+        isOpen={activeModal === "About Me"}
+        onClose={handleModalClose}
+        title="About Me"
+        colorSquares={['bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-cyan-500']}
+      >
+        <AboutContent />
+      </ModalMobile>
+      <ModalMobile
+        isOpen={activeModal === "Experience"}
+        onClose={handleModalClose}
+        title="Experience"
+        colorSquares={['bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-orange-500']}
+      >
+        <ExperienceContent />
+      </ModalMobile>
+      <ModalMobile
+        isOpen={activeModal === "Projects"}
+        onClose={handleModalClose}
+        title="Projects"
+        colorSquares={['bg-emerald-500', 'bg-teal-500', 'bg-sky-500', 'bg-violet-500']}
+      >
+        <ProjectsContent />
+      </ModalMobile>
+      <ModalMobile
+        isOpen={activeModal === "Research"}
+        onClose={handleModalClose}
+        title="Research"
+        colorSquares={['bg-red-500', 'bg-amber-500', 'bg-lime-500', 'bg-rose-500']}
+      >
+        <ResearchContent />
+      </ModalMobile>
+
+      {/* Contact Modal */}
+      <ContactModalMobile
+        isOpen={showContactModal}
+        onClose={handleContactModalClose}
+      />
+    </div>
     );
   }

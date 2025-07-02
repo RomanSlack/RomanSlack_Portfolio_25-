@@ -89,14 +89,14 @@ export default function OrbitCarouselMobile({ iconFolderPath, speedMs, sizePx, c
     setHoveredIcon(null);
   };
 
-  const carouselRadius = radius || (isExpanded ? 250 : 300);
-  const centerX = 300;
-  const centerY = 300;
+  const carouselRadius = radius || (isExpanded ? 125 : 150);
+  const centerX = 200;
+  const centerY = 200;
   const currentCircleOffsetX = isExpanded ? expandedCircleOffsetX : circleOffsetX;
   const currentCircleOffsetY = isExpanded ? expandedCircleOffsetY : circleOffsetY;
 
   return (
-    <div ref={wrapperRef} className="relative h-[600px] w-[600px]">
+    <div ref={wrapperRef} className="relative h-[400px] w-[400px]">
       <style jsx>{`
         @keyframes rotate {
           0% {
@@ -125,8 +125,8 @@ export default function OrbitCarouselMobile({ iconFolderPath, speedMs, sizePx, c
           transition: transform 0.3s ease, filter 0.3s ease, left 1s ease-in-out, top 1s ease-in-out, width 1s ease-in-out, height 1s ease-in-out;
           cursor: pointer;
         }
-        .icon-container:hover {
-          transform: scale(1.3);
+        .icon-container:active {
+          transform: scale(1.2);
           filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
           z-index: 10;
         }
@@ -138,7 +138,7 @@ export default function OrbitCarouselMobile({ iconFolderPath, speedMs, sizePx, c
         style={{
           width: `${carouselRadius * 2}px`,
           height: `${carouselRadius * 2}px`,
-          left: `${centerX - carouselRadius + currentCircleOffsetX}px`,
+
           top: `${centerY - carouselRadius + currentCircleOffsetY}px`,
           opacity: 0.4
         }}
@@ -162,9 +162,17 @@ export default function OrbitCarouselMobile({ iconFolderPath, speedMs, sizePx, c
                 width: `${sizePx}px`,
                 height: `${sizePx}px`,
               }}
-              onMouseEnter={(e) => handleMouseEnter(iconPath, e)}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
+              onTouchStart={(e) => {
+                const touch = e.touches[0];
+                const rect = wrapperRef.current!.getBoundingClientRect();
+                const iconNumber = iconPath.split('/').pop()?.replace('.png', '') || '';
+                setHoveredIcon(iconNumber);
+                setTooltipPosition({
+                  x: touch.clientX - rect.left,
+                  y: touch.clientY - rect.top
+                });
+              }}
+              onTouchEnd={() => setHoveredIcon(null)}
             >
               <Image
                 src={iconPath}
