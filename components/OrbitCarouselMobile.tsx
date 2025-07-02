@@ -89,14 +89,14 @@ export default function OrbitCarouselMobile({ iconFolderPath, speedMs, sizePx, c
     setHoveredIcon(null);
   };
 
-  const carouselRadius = radius || (isExpanded ? 125 : 150);
-  const centerX = 200;
-  const centerY = 200;
+  const carouselRadius = radius || (isExpanded ? 140 : 140);
+  const centerX = 280;
+  const centerY = 280;
   const currentCircleOffsetX = isExpanded ? expandedCircleOffsetX : circleOffsetX;
   const currentCircleOffsetY = isExpanded ? expandedCircleOffsetY : circleOffsetY;
 
   return (
-    <div ref={wrapperRef} className="relative h-[400px] w-[400px]">
+    <div ref={wrapperRef} className="relative h-[560px] w-[560px]">
       <style jsx>{`
         @keyframes rotate {
           0% {
