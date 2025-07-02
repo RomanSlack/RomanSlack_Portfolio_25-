@@ -151,8 +151,8 @@ export default function PageMobile() {
         </div>
       </div>
 
-      {/* Bottom Section: Navigation Cards - taking up bottom half */}
-      <div className="absolute bottom-0 left-0 right-0 bg-neutral-700 px-6 py-6 flex flex-col items-center justify-center" style={{ height: '50%' }}>
+      {/* Bottom Section: Navigation Cards - constrained to never overlap title section */}
+      <div className="absolute left-0 right-0 bg-neutral-700 px-6 py-6 flex flex-col items-center justify-center" style={{ top: 'calc(35% + 140px)', bottom: 0 }}>
         <div className="grid grid-cols-2 gap-6 w-full h-full max-w-md">
           <NavCardMobile title="About Me" onClick={() => handleCardClick("About Me")} isExpanded={true} />
           <NavCardMobile title="Experience" onClick={() => handleCardClick("Experience")} isExpanded={true} />
