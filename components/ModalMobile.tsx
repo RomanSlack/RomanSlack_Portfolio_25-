@@ -69,38 +69,38 @@ export default function ModalMobile({ isOpen, onClose, title, children, colorSqu
       
       {/* Modal container with slide-up and slide-down animations */}
       <div 
-        className={`relative w-full h-full mx-6 my-6 mt-16 bg-neutral-800 rounded-2xl shadow-2xl border border-neutral-700/50 transform transition-all duration-700 ease-out flex flex-col ${
+        className={`relative w-full h-full mx-4 my-4 mt-8 bg-neutral-800 rounded-xl shadow-2xl border border-neutral-700/50 transform transition-all duration-700 ease-out flex flex-col ${
           isOpen && isAnimating
             ? 'translate-y-0 opacity-100' 
             : 'translate-y-full opacity-0'
         }`}
       >
         {/* Back Button */}
-        <div className="absolute top-8 right-8 z-10">
+        <div className="absolute top-4 right-4 z-10">
           <button
             onClick={onClose}
-            className="flex items-center gap-2 text-white hover:text-neutral-300 transition-colors duration-200 group"
+            className="flex items-center gap-2 text-white active:text-neutral-300 transition-colors duration-200 group p-2 min-h-[44px] min-w-[44px]"
             aria-label="Go back"
           >
-            <IoArrowBack className="w-6 h-6 group-hover:transform group-hover:translate-x-1 transition-transform duration-200" />
+            <IoArrowBack className="w-6 h-6 group-active:transform group-active:translate-x-1 transition-transform duration-200" />
             <span className="text-lg font-medium">Back</span>
           </button>
         </div>
 
         {/* Title and Color Squares */}
-        <div className="pt-12 px-32 pb-6">
-          <h2 className="text-5xl font-bold text-white mb-4">
+        <div className="pt-16 px-6 pb-4">
+          <h2 className="text-3xl font-bold text-white mb-4">
             {title}
           </h2>
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             {colorSquares.map((color, index) => (
-              <div key={index} className={`w-4 h-4 ${color} rounded-sm`}></div>
+              <div key={index} className={`w-3 h-3 ${color} rounded-sm`}></div>
             ))}
           </div>
         </div>
         
         {/* Content */}
-        <div className="flex-1 px-32 pb-8 text-white overflow-y-auto" style={{
+        <div className="flex-1 px-6 pb-20 text-white overflow-y-auto" style={{
           scrollbarWidth: 'thin',
           scrollbarColor: '#525252 #262626',
           height: '0'
@@ -108,7 +108,7 @@ export default function ModalMobile({ isOpen, onClose, title, children, colorSqu
           {children || (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
-                <p className="text-neutral-300 text-lg">
+                <p className="text-neutral-300 text-base">
                   Content for {title} will be displayed here.
                 </p>
               </div>
@@ -118,7 +118,7 @@ export default function ModalMobile({ isOpen, onClose, title, children, colorSqu
         
         {/* Contact Button in Modal with fade-in animation */}
         <div 
-          className={`absolute bottom-8 right-8 transition-opacity duration-700 ease-out ${
+          className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 transition-opacity duration-700 ease-out ${
             isOpen && isAnimating ? 'opacity-100' : 'opacity-0'
           }`}
         >
@@ -128,7 +128,7 @@ export default function ModalMobile({ isOpen, onClose, title, children, colorSqu
               const event = new CustomEvent('openContactModal');
               window.dispatchEvent(event);
             }}
-            className="bg-white text-black font-semibold px-10 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-100 transition-all duration-200 ease-out"
+            className="bg-white text-black font-semibold px-6 py-3 text-base rounded-xl shadow-lg active:shadow-xl active:bg-gray-100 transition-all duration-200 ease-out min-h-[44px] min-w-[44px]"
             style={{
               boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 0, 0, 0.1)',
               border: '1px solid rgba(0, 0, 0, 0.1)'

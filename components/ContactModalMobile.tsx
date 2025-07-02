@@ -58,7 +58,7 @@ export default function ContactModalMobile({ isOpen, onClose }: ContactModalMobi
       name: 'LinkedIn',
       icon: (
         <svg
-          className="w-24 h-24 text-white group-hover:text-blue-400 transition-colors duration-200"
+          className="w-full h-full text-white group-active:text-blue-400 transition-colors duration-200"
           fill="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@ export default function ContactModalMobile({ isOpen, onClose }: ContactModalMobi
       name: 'GitHub',
       icon: (
         <svg
-          className="w-24 h-24 text-white group-hover:text-gray-400 transition-colors duration-200"
+          className="w-full h-full text-white group-active:text-gray-400 transition-colors duration-200"
           fill="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -84,12 +84,12 @@ export default function ContactModalMobile({ isOpen, onClose }: ContactModalMobi
     },
     {
       name: 'Email',
-      icon: <CgMail className="w-24 h-24 text-white group-hover:text-green-400 transition-colors duration-200" />,
+      icon: <CgMail className="w-full h-full text-white group-active:text-green-400 transition-colors duration-200" />,
       url: 'mailto:romanslack1@gmail.com'
     },
     {
       name: 'Resume',
-      icon: <IoNewspaperOutline className="w-24 h-24 text-white group-hover:text-orange-400 transition-colors duration-200" />,
+      icon: <IoNewspaperOutline className="w-full h-full text-white group-active:text-orange-400 transition-colors duration-200" />,
       url: '/assets/resume.pdf'
     }
   ];
@@ -108,45 +108,47 @@ export default function ContactModalMobile({ isOpen, onClose }: ContactModalMobi
       
       {/* Modal container with slide-up and slide-down animations */}
       <div 
-        className={`relative w-full h-full mx-6 my-6 mt-16 bg-neutral-800 rounded-2xl shadow-2xl border border-neutral-700/50 overflow-hidden transform transition-all duration-700 ease-out ${
+        className={`relative w-full h-full mx-4 my-4 mt-8 bg-neutral-800 rounded-xl shadow-2xl border border-neutral-700/50 overflow-hidden transform transition-all duration-700 ease-out ${
           isOpen && isAnimating
             ? 'translate-y-0 opacity-100' 
             : 'translate-y-full opacity-0'
         }`}
       >
         {/* Back Button */}
-        <div className="absolute top-8 right-8 z-10">
+        <div className="absolute top-4 right-4 z-10">
           <button
             onClick={onClose}
-            className="flex items-center gap-2 text-white hover:text-neutral-300 transition-colors duration-200 group"
+            className="flex items-center gap-2 text-white active:text-neutral-300 transition-colors duration-200 group p-2 min-h-[44px] min-w-[44px]"
             aria-label="Go back"
           >
-            <IoArrowBack className="w-6 h-6 group-hover:transform group-hover:translate-x-1 transition-transform duration-200" />
+            <IoArrowBack className="w-6 h-6 group-active:transform group-active:translate-x-1 transition-transform duration-200" />
             <span className="text-lg font-medium">Back</span>
           </button>
         </div>
 
         {/* Centered Title */}
-        <div className="flex items-center justify-center pt-16 pb-8">
-          <h2 className="text-7xl font-bold text-white text-center">
+        <div className="flex items-center justify-center pt-16 pb-6">
+          <h2 className="text-3xl font-bold text-white text-center">
             Contact Me Here
           </h2>
         </div>
         
         {/* Content */}
-        <div className="flex-1 overflow-y-auto px-8 pb-8 text-white">
+        <div className="flex-1 overflow-y-auto px-6 pb-8 text-white">
           <div className="flex items-center justify-center h-full">
-            <div className="grid grid-cols-4 gap-16 w-full max-w-6xl">
+            <div className="grid grid-cols-2 gap-6 w-full max-w-sm">
               {contactItems.map((item, index) => (
                 <div key={index} className="flex flex-col items-center">
                   <button
                     onClick={() => window.open(item.url, '_blank')}
-                    className="group flex flex-col items-center gap-6 p-8 rounded-2xl hover:bg-neutral-700/50 transition-all duration-200"
+                    className="group flex flex-col items-center gap-3 p-4 rounded-xl active:bg-neutral-700/50 transition-all duration-200 min-h-[44px] min-w-[44px] w-full"
                   >
-                    <div className="w-48 h-48 rounded-full bg-neutral-700 border-2 border-neutral-600 flex items-center justify-center group-hover:border-neutral-500 transition-colors duration-200">
-                      {item.icon}
+                    <div className="w-20 h-20 rounded-full bg-neutral-700 border-2 border-neutral-600 flex items-center justify-center group-active:border-neutral-500 transition-colors duration-200">
+                      <div className="w-12 h-12 text-white group-active:text-blue-400 transition-colors duration-200">
+                        {item.icon}
+                      </div>
                     </div>
-                    <h3 className="text-2xl font-semibold text-white group-hover:text-neutral-300 transition-colors duration-200">
+                    <h3 className="text-sm font-semibold text-white group-active:text-neutral-300 transition-colors duration-200 text-center">
                       {item.name}
                     </h3>
                   </button>
