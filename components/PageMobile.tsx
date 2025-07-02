@@ -63,19 +63,19 @@ export default function PageMobile() {
   };
 
   return (
-    <div className="h-screen bg-neutral-900 text-white flex flex-col overflow-hidden">
-      {/* Top Section: Profile Image with Orbit Carousel */}
-      <div className="flex-1 flex flex-col items-center justify-end px-4 pb-0">
+    <div className="h-screen bg-neutral-900 text-white flex flex-col overflow-hidden relative">
+      {/* Top Section: Profile Image with Orbit Carousel - moved up */}
+      <div className="flex-1 flex flex-col items-center justify-start px-4 pt-8">
         
-        {/* Profile Image with Orbit Carousel */}
-        <div className="relative">
+        {/* Profile Image with Orbit Carousel - positioned behind middle section */}
+        <div className="relative z-0 mt-8">
           <div className="relative w-[280px] h-[280px]">
             <Image
               src="/assets/roman.png"
               alt="Roman Slack Portrait"
               width={280}
               height={280}
-              className="object-contain mx-auto z-10 relative h-[280px] w-[280px]"
+              className="object-contain mx-auto relative h-[280px] w-[280px]"
             />
             
             <div className="absolute inset-0 flex items-center justify-center">
@@ -95,18 +95,18 @@ export default function PageMobile() {
         </div>
       </div>
 
-      {/* Middle Section: Title and Social Icons */}
-      <div className="flex flex-col items-center justify-center px-4 py-6">
-        {/* Title and Role */}
-        <div className="text-center mb-4">
+      {/* Middle Section: Title and Social Icons - overlaps portrait with dark background extending to bottom */}
+      <div className="absolute bottom-0 left-0 right-0 bg-neutral-800 z-10 flex flex-col items-center justify-start px-4 py-6" style={{ height: '45%' }}>
+        {/* Title and Role - in front of background */}
+        <div className="text-center mb-4 relative z-20 mt-4">
           <h1 className="text-2xl font-semibold leading-tight text-white">
             Roman Slack is a,<br />
             {titles.length > 0 && <TypewriterText titles={titles} pauseDuration={5000} delayAfterErase={1500} />}
           </h1>
         </div>
 
-        {/* Social Icons */}
-        <div className="flex gap-4 items-center justify-center">
+        {/* Social Icons - in front of background */}
+        <div className="flex gap-3 items-center justify-center relative z-20 mb-8">
           <button
             onClick={() => window.open('https://www.linkedin.com/in/roman-slack-a91a6a266/', '_blank')}
             className="active:scale-95 transition-transform duration-200 p-2 min-h-[44px] min-w-[44px]"
@@ -147,15 +147,15 @@ export default function PageMobile() {
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Section: Navigation Cards */}
-      <div className="bg-neutral-700 px-4 py-8 flex items-center justify-center">
-        <div className="grid grid-cols-2 gap-4 w-full max-w-sm">
-          <NavCardMobile title="About Me" onClick={() => handleCardClick("About Me")} isExpanded={true} />
-          <NavCardMobile title="Experience" onClick={() => handleCardClick("Experience")} isExpanded={true} />
-          <NavCardMobile title="Projects" onClick={() => handleCardClick("Projects")} isExpanded={true} />
-          <NavCardMobile title="Research" onClick={() => handleCardClick("Research")} isExpanded={true} />
+        {/* Bottom Section: Navigation Cards - embedded within the middle section */}
+        <div className="w-full px-4 relative z-20">
+          <div className="grid grid-cols-2 gap-3 w-full max-w-sm mx-auto">
+            <NavCardMobile title="About Me" onClick={() => handleCardClick("About Me")} isExpanded={true} />
+            <NavCardMobile title="Experience" onClick={() => handleCardClick("Experience")} isExpanded={true} />
+            <NavCardMobile title="Projects" onClick={() => handleCardClick("Projects")} isExpanded={true} />
+            <NavCardMobile title="Research" onClick={() => handleCardClick("Research")} isExpanded={true} />
+          </div>
         </div>
       </div>
 
@@ -213,5 +213,5 @@ export default function PageMobile() {
         onClose={handleContactModalClose}
       />
     </div>
-    );
-  }
+  );
+}
