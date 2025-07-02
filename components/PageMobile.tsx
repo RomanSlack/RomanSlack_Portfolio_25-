@@ -96,7 +96,7 @@ export default function PageMobile() {
       </div>
 
       {/* Middle Section: Title and Social Icons - positioned right under portrait */}
-      <div className="absolute" style={{ top: '55%', left: 0, right: 0 }}>
+      <div className="absolute z-50" style={{ top: '35%', left: 0, right: 0 }}>
         <div className="bg-neutral-800 px-4 py-4 flex flex-col items-center justify-center">
           {/* Title and Role */}
           <div className="text-center mb-4">
@@ -152,7 +152,7 @@ export default function PageMobile() {
       </div>
 
       {/* Bottom Section: Navigation Cards - taking up bottom half */}
-      <div className="absolute bottom-0 left-0 right-0 bg-neutral-700 px-4 py-8 flex flex-col items-center justify-center" style={{ height: '30%' }}>
+      <div className="absolute bottom-0 left-0 right-0 bg-neutral-700 px-4 py-8 flex flex-col items-center justify-center" style={{ height: '50%' }}>
         <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-4">
           <NavCardMobile title="About Me" onClick={() => handleCardClick("About Me")} isExpanded={true} />
           <NavCardMobile title="Experience" onClick={() => handleCardClick("Experience")} isExpanded={true} />
